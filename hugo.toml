@@ -1,0 +1,19 @@
+baseURL = 'https://winter-raymond.github.io/'
+languageCode = 'zh-cn'
+title = '你的博客标题'
+theme = 'PaperMod'
+
+[params]
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+
+[menu]
+[[menu.main]]
+  name = "Wiki"
+  url = "https://winter-raymond.github.io/QIE-wiki/"
+  weight = 10
+[[menu.main]]
+  name = "Archives"
+  url = "/archives/"
+  weight = 5
