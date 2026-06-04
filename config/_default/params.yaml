@@ -69,7 +69,7 @@ avatar: "熏子.jpg"
 # Control the display of the post cover
 # If not set, the banner image will be displayed by default
 # Its priority is lower than the cover in the Front-matter
-cover: "images/熏子2.jpg" # https://example.com / false / rgb(255,117,117)
+cover: "https://winter-raymond.github.io/images/xunzi3.png" # https://example.com / false / rgb(255,117,117)
 
 # Control the display of the post toc
 # Its priority is lower than the toc in the Front-matter

@@ -1,6 +1,5 @@
 ---
 title: "RoboMaster 自瞄火控调试踩坑记录"
-cover: "../../static/images/熏子2.jpg"
 date: 2026-06-04T10:00:00+08:00
 draft: false
 tags: ["RoboMaster", "视觉", "火控", "调试"]
