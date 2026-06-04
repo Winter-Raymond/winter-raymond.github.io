@@ -97,8 +97,18 @@
         </div>
         <ul id="menu" class="menu">
             <li>
+                <a href="http://localhost:1313/posts/" title="Posts">
+                    <span class="active">Posts</span>
+                </a>
+            </li>
+            <li>
                 <a href="http://localhost:1313/archives/" title="Archives">
                     <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
                 </a>
             </li>
             <li>
@@ -116,11 +126,31 @@
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header">
+<header class="page-header"><nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
   <h1>
     Posts
   </h1>
 </header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">RoboMaster 自瞄火控调试踩坑记录
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>记录自瞄系统中火控模块的调试过程，包括火控逻辑选择、debug流程和擦枪管的排查。</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-04 10:00:00 +0800 CST'>June 4, 2026</span>&nbsp;·&nbsp;<span>1 min</span></footer>
+  <a class="entry-link" aria-label="post link to RoboMaster 自瞄火控调试踩坑记录" href="http://localhost:1313/posts/robomaster-tracker-debug/"></a>
+</article>
     </main>
     
 <footer class="footer">

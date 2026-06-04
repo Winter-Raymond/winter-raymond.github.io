@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>RoboMaster on 你的博客标题</title>
+    <title>RoboMaster on Raymond Blog</title>
     <link>http://localhost:1313/tags/robomaster/</link>
-    <description>Recent content in RoboMaster on 你的博客标题</description>
+    <description>Recent content in RoboMaster on Raymond Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
+    <lastBuildDate>Thu, 04 Jun 2026 10:00:00 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/robomaster/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RoboMaster 自瞄火控调试踩坑记录</title>
+      <link>http://localhost:1313/posts/robomaster-tracker-debug/</link>
+      <pubDate>Thu, 04 Jun 2026 10:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/posts/robomaster-tracker-debug/</guid>
+      <description>记录自瞄系统中火控模块的调试过程，包括火控逻辑选择、debug流程和擦枪管的排查。</description>
+    </item>
   </channel>
 </rss>

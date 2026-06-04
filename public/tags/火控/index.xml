@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>火控 on 你的博客标题</title>
+    <title>火控 on Raymond Blog</title>
     <link>http://localhost:1313/tags/%E7%81%AB%E6%8E%A7/</link>
-    <description>Recent content in 火控 on 你的博客标题</description>
+    <description>Recent content in 火控 on Raymond Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 03 Jun 2026 15:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 10:00:00 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/%E7%81%AB%E6%8E%A7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>RoboMaster 自瞄火控调试踩坑记录</title>
       <link>http://localhost:1313/posts/robomaster-tracker-debug/</link>
-      <pubDate>Wed, 03 Jun 2026 15:00:00 +0800</pubDate>
+      <pubDate>Thu, 04 Jun 2026 10:00:00 +0800</pubDate>
       <guid>http://localhost:1313/posts/robomaster-tracker-debug/</guid>
-      <description>记录自瞄系统中 Tracker 模块的调试过程，包括 EKF 发散、装甲板跳变和反陀螺状态切换的处理。</description>
+      <description>记录自瞄系统中火控模块的调试过程，包括火控逻辑选择、debug流程和擦枪管的排查。</description>
     </item>
   </channel>
 </rss>

@@ -6,7 +6,14 @@
     <description>Recent content in Posts on Raymond Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate></lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2026 10:00:00 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RoboMaster 自瞄火控调试踩坑记录</title>
+      <link>http://localhost:1313/posts/robomaster-tracker-debug/</link>
+      <pubDate>Thu, 04 Jun 2026 10:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/posts/robomaster-tracker-debug/</guid>
+      <description>记录自瞄系统中火控模块的调试过程，包括火控逻辑选择、debug流程和擦枪管的排查。</description>
+    </item>
   </channel>
 </rss>
