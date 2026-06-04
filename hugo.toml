@@ -1,6 +1,6 @@
 baseURL = 'https://winter-raymond.github.io/'
 languageCode = 'zh-cn'
-title = 'Raymond's Blog'
+title = 'Raymond Blog'
 theme = 'PaperMod'
 
 [params]
