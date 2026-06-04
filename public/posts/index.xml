@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Raymond Blog</title>
+    <title>Posts on Raymond&#39;s Blog</title>
     <link>http://localhost:1313/posts/</link>
-    <description>Recent content in Posts on Raymond Blog</description>
+    <description>Recent content from Raymond&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
+    
+    <managingEditor>rsy20060624@outlook.com (Winter Raymond)</managingEditor>
+    <webMaster>rsy20060624@outlook.com (Winter Raymond)</webMaster>
+    
+    <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
+    
     <lastBuildDate>Thu, 04 Jun 2026 10:00:00 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss&#43;xml" />
+    
+
+    
+    
+
     <item>
       <title>RoboMaster 自瞄火控调试踩坑记录</title>
       <link>http://localhost:1313/posts/robomaster-tracker-debug/</link>
-      <pubDate>Thu, 04 Jun 2026 10:00:00 +0800</pubDate>
+      <pubDate>Thu, 04 Jun 2026 10:00:00 &#43;0800</pubDate>
+      <author>rsy20060624@outlook.com (Winter Raymond)</author>
       <guid>http://localhost:1313/posts/robomaster-tracker-debug/</guid>
-      <description>记录自瞄系统中火控模块的调试过程，包括火控逻辑选择、debug流程和擦枪管的排查。</description>
+      <description>
+        <![CDATA[<h1>RoboMaster 自瞄火控调试踩坑记录</h1><p>作者：Winter Raymond（rsy20060624@outlook.com）</p>
+        
+          记录自瞄系统中火控模块的调试过程，包括火控逻辑选择、debug流程和擦枪管的排查。
+        
+        <hr><p>本文2026-06-04首发于<a href='http://localhost:1313/'>Raymond's Blog</a>，最后修改于2026-06-04</p>]]>
+      </description>
+      
+        <category>机器人</category>
+      
     </item>
+    
   </channel>
 </rss>

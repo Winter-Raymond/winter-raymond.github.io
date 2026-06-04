@@ -1,352 +1,532 @@
-<!DOCTYPE html>
-<html lang="en" dir="auto" data-theme="auto">
-
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
-<title>RoboMaster 自瞄火控调试踩坑记录 | Raymond Blog</title>
-<meta name="keywords" content="RoboMaster, 视觉, 火控, 调试">
-<meta name="description" content="记录自瞄系统中火控模块的调试过程，包括火控逻辑选择、debug流程和擦枪管的排查。">
-<meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/robomaster-tracker-debug/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.6ff46447b1fa3f8a5cc0bcae48088decc3ae37f5fbc99406a3aefc3bf0e6044a.css" integrity="sha256-b/RkR7H6P4pcwLyuSAiN7MOuN/X7yZQGo678O/DmBEo=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
-<meta name="theme-color" content="#2e2e33">
-<meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/robomaster-tracker-debug/">
-<noscript>
-    <style>
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
-
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-                color-scheme: dark;
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .toc {
-                background: var(--entry);
-            }
-        }
-
-    </style>
-</noscript>
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.querySelector("html").dataset.theme = 'dark';
-    } else if (localStorage.getItem("pref-theme") === "light") {
-       document.querySelector("html").dataset.theme = 'light';
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.querySelector("html").dataset.theme = 'dark';
-    } else {
-        document.querySelector("html").dataset.theme = 'light';
-    }
-
+<!doctype html>
+<html
+  lang="zh-cn" 
+  data-theme-mode="auto"
+  >
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/><title>
+  RoboMaster 自瞄火控调试踩坑记录 | Winter Raymond
+</title>
+<meta name="description" content="少女祈祷中..."/><script>
+  window.siteConfig = JSON.parse("{\"anchor\":{\"auto\":{\"enable\":false,\"length\":60},\"explicit\":{\"enable\":false,\"marker\":\"{#anchor-\",\"prefix\":\"anchor-\"}},\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_ex15nbittbh\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
+  
 </script>
-</head>
-<body id="top">
-    <header class="header">
-    <nav class="header-nav">
-        <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Raymond Blog (Alt + H)">Raymond Blog</a>
-            <div class="logo-switches">
-                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
-                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <ul id="menu" class="menu">
-            <li>
-                <a href="http://localhost:1313/posts/" title="Posts">
-                    <span>Posts</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://localhost:1313/archives/" title="Archives">
-                    <span>Archives</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://localhost:1313/tags/" title="Tags">
-                    <span>Tags</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://winter-raymond.github.io/QIE-wiki/" title="Wiki">
-                    <span>Wiki</span>&nbsp;
-                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
-                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
-                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
-                        <path d="M15 3h6v6"></path>
-                        <path d="M10 14L21 3"></path>
-                    </svg>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="main">
-
-<article class="post-single">
-  <header class="post-header">
-    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
-            <a href="/">Home</a>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-            <a href="/posts/">Posts</a>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-        <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
-</nav>
-    <h1 class="post-title entry-hint-parent">
-      RoboMaster 自瞄火控调试踩坑记录
-    </h1>
-    <div class="post-meta">
-
-<span title='2026-06-04 10:00:00 +0800 CST'>June 4, 2026</span>&nbsp;·&nbsp;<span>1 min</span>
-
-</div>
-  </header> <details class="toc" >
-    <summary accesskey="c" title="(Alt + C)">
-        <span class="title">Table of Contents</span>
-    </summary>
-
-    <div class="inner"><ul>
-            <li>
-                <a href="#%e8%83%8c%e6%99%af" aria-label="背景">背景</a></li>
-            <li>
-                <a href="#%e7%81%ab%e6%8e%a7%e4%b8%8d%e7%ac%a6%e5%90%88%e5%ae%9e%e9%99%85" aria-label="火控不符合实际">火控不符合实际</a><ul>
-                    
-            <li>
-                <a href="#%e7%8e%b0%e8%b1%a1" aria-label="现象">现象</a></li>
-            <li>
-                <a href="#%e6%8e%92%e6%9f%a5" aria-label="排查">排查</a></li>
-            <li>
-                <a href="#%e8%a7%a3%e5%86%b3" aria-label="解决">解决</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e6%95%88%e6%9e%9c" aria-label="效果">效果</a></li>
-            <li>
-                <a href="#%e6%80%bb%e7%bb%93" aria-label="总结">总结</a>
-            </li>
-        </ul>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+  media="print"
+  onload="this.media='all'"
+/>
+<link
+    rel="preload"
+    href="//at.alicdn.com/t/c/font_4552607_ex15nbittbh.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
+  <meta property="og:title" content="RoboMaster 自瞄火控调试踩坑记录 | Winter Raymond" />
+  <meta
+    property="og:description"
+    content="少女祈祷中..."
+  />
+  <meta property="og:url" content="http://localhost:1313/posts/robomaster-tracker-debug/" />
+  <meta
+    property="og:site_name"
+    content="Raymond&#39;s Blog"
+  />
+  <meta property="og:image" content="http://localhost:1313/static/images/%E7%86%8F%E5%AD%902.jpg" />
+  <meta property="article:author" content="Winter Raymond" />
+  <meta property="article:published_time" content="2026-06-04T10:00:00&#43;08:00" />
+  <meta property="article:modified_time" content="2026-06-04T10:00:00&#43;08:00" /><meta property="article:tag" content="RoboMaster, 视觉, 火控, 调试" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/static/images/%E7%86%8F%E5%AD%902.jpg" />
+<link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css"
+    integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei&#43;Zx/1oA/0l8ysE" crossorigin="anonymous"
+    onload="this.onload=null;this.rel='stylesheet'"
+  /><link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/katex@0.16.24/dist/katex.min.css"
+    integrity="sha384-tTgKLjMYmJr94v8qu2PE5MUGSMbyN2xiH266JUB3gpm8vnnJywd1dWSOEfrFz&#43;YI" crossorigin="anonymous"
+    onload="this.onload=null;this.rel='stylesheet'"
+  /><script
+    src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"
+    
+    
+    
+    
+    integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script><link
+    rel="stylesheet"
+    href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css"
+    integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous"/></head>
+  <body><div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate"><svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+          M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg></div><div class="loading-word">少女祈祷中...</div>
     </div>
-</details>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var loaderEl = document.getElementById('loader');
+    var startLoading = () => {
+      time = Date.now();
+      loaderEl.classList.remove("loading");
+    }
+    var hideLoader = () => {
+      document.body.style.overflow = 'auto';
+      loader.classList.add('loading');
+    };
 
-  <div class="post-content md-content"><h2 id="背景">背景<a hidden class="anchor" aria-hidden="true" href="#背景">#</a></h2>
-<p>RMUC2026后，尝试解决一些比赛过程中发现的问题，主要是定位到了手眼标定，原来的手眼标定和机械给的参数差得蛮多的，而且自己的静态误差也大得离谱，估计距离8m的情况下，观察高度为0.86m的目标，观测高度为1.1～1.2m，很要命的误差，后来借鉴了小鱼的标定手法，主要参考这一篇<a href="https://zhuanlan.zhihu.com/p/388965279?share_code=9boac3GKx2TA&amp;utm_psn=2039622685618082703">文章</a>，但是实际测试下来效果，怎么说呢，对比之前的超绝误差有很大进步，但在8m的距离下依旧不够用</p>
-<h2 id="火控不符合实际">火控不符合实际<a hidden class="anchor" aria-hidden="true" href="#火控不符合实际">#</a></h2>
-<h3 id="现象">现象<a hidden class="anchor" aria-hidden="true" href="#现象">#</a></h3>
-<p>我们英雄打击前哨站的策略是定头，就是枪管始终指向机器人中心，等待装甲板转过来（因为电机劲儿太小控不住云台），所以按理来说弹丸落点就算高度打不准，也应该一直打在机器人中心位置，但实际就是弹丸落点很散，有时左偏有时右偏，整体效果很难绷。</p>
-<h3 id="排查">排查<a hidden class="anchor" aria-hidden="true" href="#排查">#</a></h3>
-<p>最开始觉得是擦枪管的问题，就用粉笔在枪管里面画了一小圈圆，如果擦的话粉笔会被擦掉，后来确实有这个问题，但是似乎不是根源，于是接着排查。
-后面又觉得是观测问题，比如镜头上有指纹之类的，后来看了一下确实有，擦一下就好了。哦，还有超绝坑货，之前为了保护那个镜头加的一个透明的亚克力板（感觉材质应该是），我真服了，那个板都损坏了，我透过那个板子看前哨站都模糊，艹，赶紧卸下来，以后也别加了
-用 plotjuggler 看了曲线，大概就是 /processor/target 也就是过了卡尔曼滤波的数据，应该都是目标相对于弹丸发射点的位置或者速度，测量了一下，发现距离上也没什么问题，实际距离可能在 8.2～8.3m，但是观测距离在 8.28m 还算不错，又看了电控的返回值和我们的目标值，发现其实也还好，跟得算不错了，没有稳态误差，后来觉得可能还是手眼标定的问题，因为距离近了就好了，但是如果是手眼标定的问题，为什么在其它条件都相同的情况下会有时候偏左，有时候偏右呢？甚至车也没有重新上电，没有重启代码。百思不得其解，然后就晚上7:30了，要润去上选修课了，上课的时候也在想。
+    var endLoading = () => {
+      if (!time) {
+        hideLoader();
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          hideLoader();
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    loaderEl.addEventListener('click', endLoading);
+  </script><div id="copy-tooltip"></div>
+<div id="lang-tooltip">
+本文章没有找到对应的语言版本
+</div>
+<div id="heatmap-tooltip"></div><div id="container">
+      <div id="wrap"><div id="header-nav">
+  <nav id="main-nav" aria-label="Primary navigation"><a class="main-nav-link-wrap" href="/"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">首页</span>
+      </a><a class="main-nav-link-wrap" href="https://gitee.com/winter_raymond"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">Gitee</span>
+      </a><a class="main-nav-link-wrap" href="https://winter-raymond.github.io/QIE-wiki/"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">Wiki</span>
+      </a><a class="main-nav-link-wrap" href="/about"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">关于</span>
+      </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
+  </nav>
+  <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
+<header id="header" aria-label="Site header"><picture></picture>
+    <img crossorigin="anonymous" fetchpriority="high" src="/static/images/%e7%86%8f%e5%ad%902.jpg" alt="RoboMaster 自瞄火控调试踩坑记录"><div id="header-outer">
+    <div id="header-title"><span id="logo">
+            <h1 data-aos="slide-up">RoboMaster 自瞄火控调试踩坑记录</h1>
+          </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
+  </div>
+</header><div id="content"
+          aria-label="Page content"
+          class="sidebar-left"
+            ><aside id="sidebar" aria-label="Sidebar"><div class="sidebar-wrapper-container sticky"><div class="sidebar-wrapper">
+    <div
+      class="sidebar-wrap"
+      data-aos="fade-up"
+    ><div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#火控不符合实际">火控不符合实际</a>
+      <ul>
+        <li><a href="#现象">现象</a></li>
+        <li><a href="#排查">排查</a></li>
+        <li><a href="#解决">解决</a></li>
+      </ul>
+    </li>
+    <li><a href="#效果">效果</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+</div></div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/%e7%86%8f%e5%ad%90.jpg"
+    data-sizes="auto"
+    alt="Winter Raymond"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">Winter Raymond</div>
+  <div class="sidebar-description">少女祈祷中...</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div><div class="sidebar-state-number">1</div>
+  </div>
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
+    <div>分类</div>
+    <div class="sidebar-state-number">
+      1
+    </div>
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
+    <div>标签</div>
+    <div class="sidebar-state-number">4</div>
+  </a>
+</div>
+<div class="sidebar-social" ></div><div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/"
+        aria-label="首页"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">首页</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="https://gitee.com/winter_raymond"
+        aria-label="Gitee"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Gitee</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="https://winter-raymond.github.io/QIE-wiki/"
+        aria-label="Wiki"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Wiki</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/about"
+        aria-label="关于"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">关于</div>
+    </div></div></div><div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div></div>
+  </div><div class="sidebar-widget"></div></div></aside>
+<section id="main" aria-label="Main content"><article
+  class="h-entry article"
+  itemscope
+  itemtype="https://schema.org/BlogPosting"
+>
+  <div
+    class="article-inner"
+    data-aos="fade-up"
+  >
+    <div class="article-meta"><div class="article-date">
+  <span
+    class="article-date-link icon-calendar"
+    data-aos="zoom-in"
+  >
+    <time datetime="2026-06-04 10:00:00 &#43;0800 CST" itemprop="datePublished"
+      >2026-06-04</time
+    >
+    <time style="display: none;" id="post-update-time"
+      >2026-06-04</time
+    >
+  </span></div>
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h2 id="背景">
+<a class="header-anchor" href="#%e8%83%8c%e6%99%af"></a>
+背景
+</h2><p>  RMUC2026后，尝试解决一些比赛过程中发现的问题，主要是定位到了手眼标定，原来的手眼标定和机械给的参数差得蛮多的，而且自己的静态误差也大得离谱，估计距离8m的情况下，观察高度为0.86m的目标，观测高度为1.1～1.2m，很要命的误差，后来借鉴了小鱼的标定手法，主要参考这一篇<a href="https://zhuanlan.zhihu.com/p/388965279?share_code=9boac3GKx2TA&amp;utm_psn=2039622685618082703">文章</a>，但是实际测试下来效果，怎么说呢，对比之前的超绝误差有很大进步，但在8m的距离下依旧不够用</p>
+<h2 id="火控不符合实际">
+<a class="header-anchor" href="#%e7%81%ab%e6%8e%a7%e4%b8%8d%e7%ac%a6%e5%90%88%e5%ae%9e%e9%99%85"></a>
+火控不符合实际
+</h2><h3 id="现象">
+<a class="header-anchor" href="#%e7%8e%b0%e8%b1%a1"></a>
+现象
+</h3><p>  我们英雄打击前哨站的策略是定头，就是枪管始终指向机器人中心，等待装甲板转过来（因为电机劲儿太小控不住云台），所以按理来说弹丸落点就算高度打不准，也应该一直打在机器人中心位置，但实际就是弹丸落点很散，有时左偏有时右偏，整体效果很难绷。</p>
+<h3 id="排查">
+<a class="header-anchor" href="#%e6%8e%92%e6%9f%a5"></a>
+排查
+</h3><p>  最开始觉得是擦枪管的问题，就用粉笔在枪管里面画了一小圈圆，如果擦的话粉笔会被擦掉，后来确实有这个问题，但是似乎不是根源，于是接着排查。</p>
+<p>  后面又觉得是观测问题，比如镜头上有指纹之类的，后来看了一下确实有，擦一下就好了。哦，还有超绝坑货，之前为了保护那个镜头加的一个透明的亚克力板（感觉材质应该是），我真服了，那个板都损坏了，我透过那个板子看前哨站都模糊，艹，赶紧卸下来，以后也别加了。</p>
+<p>  用 plotjuggler 看了曲线，大概就是 /processor/target 也就是过了卡尔曼滤波的数据，应该都是目标相对于弹丸发射点的位置或者速度，测量了一下，发现距离上也没什么问题，实际距离可能在 8.2～8.3m，但是观测距离在 8.28m 还算不错，又看了电控的返回值和我们的目标值，发现其实也还好，跟得算不错了，没有稳态误差，后来觉得可能还是手眼标定的问题，因为距离近了就好了，但是如果是手眼标定的问题，为什么在其它条件都相同的情况下会有时候偏左，有时候偏右呢？甚至车也没有重新上电，没有重启代码。百思不得其解，然后就晚上7:30了，要润去上选修课了，上课的时候也在想。
 最后想到一个点，之前由于为了表示自己尊重科学，过于 <strong>相信</strong> 卡尔曼滤波了，直接在前哨站的火控逻辑里加了一个：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> pred_cx <span style="color:#f92672">=</span> cur_x <span style="color:#f92672">+</span> vx <span style="color:#f92672">*</span> predict_time;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> pred_cx <span style="color:#f92672">=</span> cur_x <span style="color:#f92672">+</span> vx <span style="color:#f92672">*</span> predict_time;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> pred_cy <span style="color:#f92672">=</span> cur_y <span style="color:#f92672">+</span> vy <span style="color:#f92672">*</span> predict_time;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> aim_yaw <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>atan2(cur_y, cur_x);
-</span></span></code></pre></div><p>但是，注意一个点，由于卡尔曼滤波只是进行状态估计，所以 <strong>vx</strong> 和 <strong>vy</strong> 都只能是一个较低的值，很难是正儿八经的0.0，加上8m的直线距离下，12m/s弹丸飞行时间接近 <strong>1s</strong> 这直接引入了几个cm量级的误差。
+</span></span></code></pre></div><p>  但是，注意一个点，由于卡尔曼滤波只是进行状态估计，所以 <strong>vx</strong> 和 <strong>vy</strong> 都只能是一个较低的值，很难是正儿八经的0.0，加上8m的直线距离下，12m/s弹丸飞行时间接近 <strong>1s</strong> 这直接引入了几个cm量级的误差。
 这样既可以解释他为什么左右飘，又可以解释他为什么飘移动是随机的。</p>
-<h3 id="解决">解决<a hidden class="anchor" aria-hidden="true" href="#解决">#</a></h3>
-<p>其实也好说，在前哨站逻辑里的<strong>vx</strong>和<strong>vy</strong>置零就行了：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> vx    <span style="color:#f92672">=</span> msg<span style="color:#f92672">-&gt;</span>velocity.x;
+<h3 id="解决">
+<a class="header-anchor" href="#%e8%a7%a3%e5%86%b3"></a>
+解决
+</h3><p>  其实也好说，在前哨站逻辑里的<strong>vx</strong>和<strong>vy</strong>置零就行了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> vx    <span style="color:#f92672">=</span> msg<span style="color:#f92672">-&gt;</span>velocity.x;
 </span></span><span style="display:flex;"><span>    vx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> vy    <span style="color:#f92672">=</span> msg<span style="color:#f92672">-&gt;</span>velocity.y;
 </span></span><span style="display:flex;"><span>    vy <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
-</span></span></code></pre></div><p>注意有三个函数 <code>processOutpost</code>、<code>processOutpostFallback</code> 和 <code>processOutpostStatic</code> 都得改
+</span></span></code></pre></div><p>  注意有三个函数 <code>processOutpost</code>、<code>processOutpostFallback</code> 和 <code>processOutpostStatic</code> 都得改
 别怪我哦，这样先写一下嘛，以后再正儿八经改。</p>
-<h2 id="效果">效果<a hidden class="anchor" aria-hidden="true" href="#效果">#</a></h2>
-<p>正反转效果很好，至少yaw方向是正确的，而且只打中心了，说明确实是这个问题。
+<h2 id="效果">
+<a class="header-anchor" href="#%e6%95%88%e6%9e%9c"></a>
+效果
+</h2><p>  正反转效果很好，至少yaw方向是正确的，而且只打中心了，说明确实是这个问题。
 真要抽自己了</p>
-<p><img loading="lazy" src="../../assets/imgs/%E8%80%B3%E5%85%89.gif"></p>
-<h2 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h2>
-<p>力竭了，真要燃尽了，又是被抽象bug折磨的n天，艹。下次还是注意点儿工程实现吧，尽力实现贴近工程的实现。</p>
+<p><img src="../../assets/imgs/%E8%80%B3%E5%85%89.gif" alt=""></p>
+<h2 id="总结">
+<a class="header-anchor" href="#%e6%80%bb%e7%bb%93"></a>
+总结
+</h2><p>  力竭了，真要燃尽了，又是被抽象bug折磨的n天，艹。下次还是注意点儿工程实现吧，尽力实现贴近工程的实现。</p>
 <hr>
-<p><em>装备：大疆 RoboMaster 英雄，HikVision 工业相机，Intel</em></p>
-
-
-  </div>
-
-  <footer class="post-footer">
-    <ul class="post-tags">
-      <li><a href="http://localhost:1313/tags/robomaster/">RoboMaster</a></li>
-      <li><a href="http://localhost:1313/tags/%E8%A7%86%E8%A7%89/">视觉</a></li>
-      <li><a href="http://localhost:1313/tags/%E7%81%AB%E6%8E%A7/">火控</a></li>
-      <li><a href="http://localhost:1313/tags/%E8%B0%83%E8%AF%95/">调试</a></li>
-    </ul>
-
-  </footer>
-</article>
-    </main>
-    
-<footer class="footer">
-        <span>&copy; 2026 <a href="http://localhost:1313/">Raymond Blog</a></span> · 
-
-    
-    
-    <span>
-        Powered by
-        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
-        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
-    </span>
+<p><em>装备：RoboMaster 英雄，HikVision 12mm 工业相机，Intel</em></p>
+</div>
+    <footer class="article-footer"><ul class="article-category-list"><li class="article-tag-list-item" data-aos="zoom-in">
+    <a
+      class="article-category-link"
+      href="/categories/%e6%9c%ba%e5%99%a8%e4%ba%ba"
+      data-aos="zoom-in"
+      >机器人</a
+    >
+    </li></ul>
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/robomaster"
+        rel="tag"
+        >RoboMaster</a
+      >
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/%e8%a7%86%e8%a7%89"
+        rel="tag"
+        >视觉</a
+      >
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/%e7%81%ab%e6%8e%a7"
+        rel="tag"
+        >火控</a
+      >
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/%e8%b0%83%e8%af%95"
+        rel="tag"
+        >调试</a
+      >
+    </li></ul>
 </footer>
-<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
-        <polyline points="17 11 12 6 7 11"></polyline>
-        <polyline points="17 18 12 13 7 18"></polyline>
-    </svg>
-</a>
-
-<script>
-    let menu = document.getElementById('menu');
-    if (menu) {
-        
-        const scrollPosition = localStorage.getItem("menu-scroll-position");
-        if (scrollPosition) {
-            menu.scrollLeft = parseInt(scrollPosition, 10);
-        }
-        
-        menu.onscroll = function () {
-            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
-
-</script>
-<script>
-    var toplink = document.getElementById("top-link");
-    window.onscroll = function () {
-        const scrollThreshold = window.innerHeight;
-        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
-            toplink.classList.remove("hidden");
-        } else {
-            toplink.classList.add("hidden");
-        }
+  </div></article></section>
+        </div><footer id="footer" aria-label="Site footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info"><div>
+      <span class="icon-copyright"></span>2020-2026<span class="footer-info-sep rotate"></span>Winter Raymond
+    </div><div>
+        基于&nbsp;<a
+          href="https://gohugo.io/"
+          target="_blank"
+          rel="noopener nofollow noreferrer"
+          >Hugo</a
+        >&nbsp;Theme.<a
+          href="https://github.com/D-Sketon/hugo-theme-reimu"
+          target="_blank"
+          rel="noopener nofollow noreferrer"
+          >Reimu</a
+        >
+      </div><div>
+        <span class="icon-brush"
+          >&nbsp;79</span
+        >
+        &nbsp;|&nbsp;
+        <span class="icon-coffee">&nbsp;00:01</span>
+      </div><div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv"
+          >总访问量&nbsp;<span
+            id="busuanzi_value_site_pv"
+          ></span
+        ></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv"
+          >总访客量&nbsp;<span
+            id="busuanzi_value_site_uv"
+          ></span
+        ></span>
+      </div></div>
+</footer>
+<div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div><div id="mask" class="hide"></div>
+      </div><nav id="mobile-nav" aria-label="Mobile navigation">
+  <div class="sidebar-wrap"><div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#火控不符合实际">火控不符合实际</a>
+      <ul>
+        <li><a href="#现象">现象</a></li>
+        <li><a href="#排查">排查</a></li>
+        <li><a href="#解决">解决</a></li>
+      </ul>
+    </li>
+    <li><a href="#效果">效果</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+</div></div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/%e7%86%8f%e5%ad%90.jpg"
+    data-sizes="auto"
+    alt="Winter Raymond"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">Winter Raymond</div>
+  <div class="sidebar-description">少女祈祷中...</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div><div class="sidebar-state-number">1</div>
+  </div>
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
+    <div>分类</div>
+    <div class="sidebar-state-number">
+      1
+    </div>
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
+    <div>标签</div>
+    <div class="sidebar-state-number">4</div>
+  </a>
+</div>
+<div class="sidebar-social" ></div><div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/"
+        aria-label="首页"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">首页</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="https://gitee.com/winter_raymond"
+        aria-label="Gitee"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Gitee</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="https://winter-raymond.github.io/QIE-wiki/"
+        aria-label="Wiki"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Wiki</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/about"
+        aria-label="关于"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">关于</div>
+    </div></div></div></div><div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div></nav>
+</div><script
+    src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"
+    
+    
+    
+    
+    integrity="sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf&#43;e" crossorigin="anonymous"></script><script
+    src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"
+    
+    
+    
+    
+    integrity="sha384-J08i8An/QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script><script
+    src="https://npm.webcache.cn/material-theme@1.0.0/dist/material-theme.umd.js"
+    
+    
+    
+    
+    integrity="sha384-vLev0II0HKFaxkcm&#43;/7kX5IGwVFBASkGchU311wmU/veIj2bB0UcBkQbW6yw2asK" crossorigin="anonymous"></script><script src="/js/main.js"  ></script><script src="/js/aos.js"  ></script><script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
     };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", aosInit);
+    } else {
+      aosInit();
+    }
+  </script><script src="/js/pjax_main.js" data-pjax ></script><script>
+  var setupFirework = () => {
+    if (! false  || !window.matchMedia('(max-width: 768px)').matches) {
+      if (window.firework) {
+        const options = JSON.parse("{\"excludeelements\":[\"a\",\"button\"],\"particles\":[{\"colors\":[\"var(--red-1)\",\"var(--red-2)\",\"var(--red-3)\",\"var(--red-4)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"emit\"],\"number\":20,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.3,0.5],\"radius\":[16,32]}},{\"colors\":[\"var(--red-0)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"diffuse\"],\"number\":1,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.2,0.5],\"lineWidth\":6,\"radius\":20}}]}");
+        options.excludeElements = options.excludeelements;
+        delete options.excludeelements;
+        window.firework(options);
+      }
+    }
+  }
+</script><script
+    src="https://npm.webcache.cn/mouse-firework@0.2.0/dist/index.umd.js"
+    defer
+    
+    
+    onload="setupFirework()"
+    integrity="sha384-qi9WggRt19tv8Vc7pCHW3ulMNLwrn515zaLEWZjl1px07vz8&#43;pUoWX8n1rgq282T" crossorigin="anonymous"></script>
 
-</script>
-<script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-        const html = document.querySelector("html");
-        if (html.dataset.theme === "dark") {
-            html.dataset.theme = 'light';
-            localStorage.setItem("pref-theme", 'light');
-        } else {
-            html.dataset.theme = 'dark';
-            localStorage.setItem("pref-theme", 'dark');
+<div id="lazy-script">
+  <div><script data-pjax>
+        window.REIMU_POST = {
+          author: "Winter Raymond",
+          title: "RoboMaster 自瞄火控调试踩坑记录",
+          url: "http:\/\/localhost:1313\/posts\/robomaster-tracker-debug\/",
+          description: "记录自瞄系统中火控模块的调试过程，包括火控逻辑选择、debug流程和擦枪管的排查。",
+          cover: "http:\/\/localhost:1313\/static\/images\/%E7%86%8F%E5%AD%902.jpg",
+        };
+      </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
+          if (_$$(`${gallery} ${children}`).length > 0) {
+            new PhotoSwipeLightbox({
+              gallery,
+              children,pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")}).init();
+          }
         }
-    })
-
-</script>
-<script>
-    document.querySelectorAll('pre > code').forEach((codeblock) => {
-        const container = codeblock.parentNode.parentNode;
-
-        const copybutton = document.createElement('button');
-        copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
-
-        function copyingDone() {
-            copybutton.innerHTML = 'copied!';
-            setTimeout(() => {
-                copybutton.innerHTML = 'copy';
-            }, 2000);
+        const pswp = () => {
+          initPswp('.article-entry', 'a.article-gallery-item');
+          initPswp('.article-gallery', 'a.article-gallery-item');
         }
-
-        copybutton.addEventListener('click', (cb) => {
-            if ('clipboard' in navigator) {
-                navigator.clipboard.writeText(codeblock.textContent);
-                copyingDone();
-                return;
-            }
-
-            const range = document.createRange();
-            range.selectNodeContents(codeblock);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                copyingDone();
-            } catch (e) { };
-            selection.removeRange(range);
-        });
-
-        if (container.classList.contains("highlight")) {
-            container.appendChild(copybutton);
-        } else if (container.parentNode.firstChild == container) {
-            
-        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
-            
-            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
-        } else {
-            
-            codeblock.parentNode.appendChild(copybutton);
+        pswp()
+      </script></div>
+</div><script
+    src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js"
+    
+    async
+    
+    
+    integrity="sha384-0M75wtSkhjIInv4coYlaJU83&#43;OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id&#43;S" crossorigin="anonymous"></script><script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (let registration of registrations) {
+          registration.unregister();
         }
-    });
-</script>
-</body>
-
+      });
+    }
+  </script><script>
+  const reimuCopyright = String.raw`
+   ______     ______     __     __    __     __  __    
+  /\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+  \ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+   \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+    \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                    
+  `;
+  console.log(String.raw`%c ${reimuCopyright}`, "color: #ff5252;");
+  console.log(
+    "%c Theme.Reimu" + " %c https://github.com/D-Sketon/hugo-theme-reimu ",
+    "color: white; background: #ff5252; padding:5px 0;",
+    "padding:4px;border:1px solid #ff5252;",
+  );
+</script></body>
 </html>

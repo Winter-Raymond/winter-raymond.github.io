@@ -1,3 +1,9 @@
 [submodule "themes/PaperMod"]
 	path = themes/PaperMod
 	url = https://github.com/adityatelange/hugo-PaperMod.git
+[submodule "hugo-theme-reimu"]
+	path = hugo-theme-reimu
+	url = git@github.com:D-Sketon/hugo-theme-reimu.git
+[submodule "themes/reimu"]
+	path = themes/reimu
+	url = git@github.com:D-Sketon/hugo-theme-reimu.git

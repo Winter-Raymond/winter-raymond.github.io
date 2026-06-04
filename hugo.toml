@@ -1,7 +1,7 @@
 baseURL = 'https://winter-raymond.github.io/'
 languageCode = 'zh-cn'
-title = 'Raymond Blog'
-theme = 'PaperMod'
+title = "Raymond's Blog"
+theme = "reimu"
 
 # 让 PaperMod 显示摘要列表
 [pagination]
