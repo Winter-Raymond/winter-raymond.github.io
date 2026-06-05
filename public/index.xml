@@ -22,13 +22,13 @@
     
 
     <item>
-      <title>RoboMaster 自瞄火控调试踩坑记录</title>
+      <title>RoboMaster 自瞄手眼调试优化记录</title>
       <link>http://localhost:1313/posts/robomaster-handeyecalibration/</link>
       <pubDate>Fri, 05 Jun 2026 00:15:54 &#43;0800</pubDate>
       <author>rsy20060624@outlook.com (Winter Raymond)</author>
       <guid>http://localhost:1313/posts/robomaster-handeyecalibration/</guid>
       <description>
-        <![CDATA[<h1>RoboMaster 自瞄火控调试踩坑记录</h1><p>作者：Winter Raymond（rsy20060624@outlook.com）</p>
+        <![CDATA[<h1>RoboMaster 自瞄手眼调试优化记录</h1><p>作者：Winter Raymond（rsy20060624@outlook.com）</p>
         
           记录自瞄系统中手眼模块的调试过程，包括基本原理、标定手法和标定效果好坏的判断依据。
         
