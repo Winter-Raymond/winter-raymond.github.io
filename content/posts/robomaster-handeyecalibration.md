@@ -1,7 +1,7 @@
 ---
 date: "2026-06-05T00:15:54+08:00"
 draft: false
-title: "RoboMaster 自瞄手眼调试优化记录"
+title: "RoboMaster 自瞄手眼标定调试优化记录"
 cover: https://winter-raymond.github.io/images/xunzi6.png
 tags: ["RoboMaster", "视觉", "调试", "手眼标定"]
 categories: ["机器人"]
