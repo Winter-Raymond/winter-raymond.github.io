@@ -24,7 +24,7 @@
   gtag('config', 'true');
 </script>
 <script>
-  window.siteConfig = JSON.parse("{\"anchor\":{\"auto\":{\"enable\":false,\"length\":60},\"explicit\":{\"enable\":false,\"marker\":\"{#anchor-\",\"prefix\":\"anchor-\"}},\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_ex15nbittbh\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
+  window.siteConfig = JSON.parse("{\"anchor\":{\"auto\":{\"enable\":false,\"length\":60},\"explicit\":{\"enable\":false,\"marker\":\"{#anchor-\",\"prefix\":\"anchor-\"}},\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"i18n_languages\":[{\"label\":\"English\",\"lang\":\"en\"},{\"label\":\"日本語\",\"lang\":\"ja\"},{\"label\":\"简体中文\",\"lang\":\"zh-cn\"},{\"label\":\"繁體中文\",\"lang\":\"zh-tw\"}],\"icon_font\":\"4552607_ex15nbittbh\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
   
 </script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -133,7 +133,56 @@
       </a><a class="main-nav-link-wrap" href="/about"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">关于</span>
       </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
-  <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
+  <nav id="sub-nav" aria-label="Secondary navigation"></nav><nav id="i18n-nav" aria-label="Language selection">
+      <div class="custom-dropdown">
+        <div class="select-selected" id="select-selected" role="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Language menu">
+          <span id="nav-language-btn" class="nav-icon" style="padding: 0 20px 0 0"></span>
+          <span id="selected-lang">简体中文</span>
+        </div>
+        <ul class="select-items" id="select-items" role="listbox" aria-label="Languages"><li data-value="zh-cn" role="option" class="selected" aria-selected="true" >简体中文</li></ul>
+      </div>
+      <script>
+        var selectSelected = document.getElementById("select-selected");
+        var selectedLang = document.getElementById("selected-lang");
+        var selectItems = document.getElementById("select-items");
+        var selectOptions = selectItems.querySelectorAll("li");
+
+        selectSelected.addEventListener("click", () => {
+          selectItems.classList.toggle("show");
+          var expanded = selectSelected.getAttribute("aria-expanded") === "true";
+          selectSelected.setAttribute("aria-expanded", (!expanded).toString());
+        });
+
+        selectOptions.forEach((item) => {
+          item.addEventListener("click", () => {
+            const langMap = {};selectedLang.textContent = item.textContent;
+            selectItems.classList.remove("show");
+            selectOptions.forEach((option) => {
+              option.classList.remove("selected");
+            });
+            item.classList.add("selected");
+            if (item.dataset.value === 'zh-cn') {
+              return;
+            }
+            if (!langMap[item.dataset.value]) {
+              _$("#lang-tooltip").style.opacity = "1";
+              setTimeout(() => {
+                _$("#lang-tooltip").style.opacity = "0";
+              }, 1000);
+              return;
+            }
+            window.location = langMap[item.dataset.value];
+          });
+        });
+
+        document.addEventListener("click", (event) => {
+          if (!event.target.closest(".custom-dropdown")) {
+            selectItems.classList.remove("show");
+            selectSelected.setAttribute("aria-expanded", "false");
+          }
+        });
+      </script>
+    </nav></div>
 <header id="header" aria-label="Site header"><picture></picture>
     <img crossorigin="anonymous" fetchpriority="high" src="https://winter-raymond.github.io/images/xunzi6.png" alt="RoboMaster 自瞄手眼标定调试优化记录"><div id="header-outer">
     <div id="header-title"><span id="logo">
@@ -456,52 +505,52 @@ $$<p>常用的优化库包括：</p>
 </h3><p>  理解原理后其实也好说，其实也好说，在有算法已经被封装好的情况下，我们需要做的其实就是获取信息。第一是标定板在相机坐标系下的位置，这个可以通过 <strong>PnP解算</strong> 实现，需要先进行内参标定，然后调用 <strong>OpenCV</strong> 的标定板识别函数即可，根据标定板的不同，调用的函数也不一样。</p>
 <p>  其次就是位姿相对于基座的变换了，这个可以通过，获取电控那边发来的数据得到，就是正常情况下，电控那边都会发来目前云台的 <strong>pitch 和 yaw</strong>，通过订阅对应的话题就可以获得当前位姿相对于基座的变换了。
 这里附上部分伪代码实现：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// 1. 检测标定板，获取相机到标定板的变换 T_C_T
-</span></span></span><span style="display:flex;"><span>cv<span style="color:#f92672">::</span>Mat image <span style="color:#f92672">=</span> camera.capture();
-</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>cv<span style="color:#f92672">::</span>Point2f<span style="color:#f92672">&gt;</span> corners;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> found <span style="color:#f92672">=</span> cv<span style="color:#f92672">::</span>findChessboardCorners(image, board_size, corners);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (found) {
-</span></span><span style="display:flex;"><span>    cv<span style="color:#f92672">::</span>Mat rvec, tvec;
-</span></span><span style="display:flex;"><span>    cv<span style="color:#f92672">::</span>solvePnP(object_points, corners, camera_matrix, dist_coeffs, rvec, tvec);
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 转换为变换矩阵
-</span></span></span><span style="display:flex;"><span>    T_C_T <span style="color:#f92672">=</span> buildTransformMatrix(rvec, tvec);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 2. 从电控获取云台姿态，构建基座到末端的变换 T_B_E
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">float</span> pitch, yaw;
-</span></span><span style="display:flex;"><span>gimbal_topic.subscribe([<span style="color:#f92672">&amp;</span>](<span style="color:#66d9ef">auto</span> msg) {
-</span></span><span style="display:flex;"><span>    pitch <span style="color:#f92672">=</span> msg.pitch;
-</span></span><span style="display:flex;"><span>    yaw <span style="color:#f92672">=</span> msg.yaw;
-</span></span><span style="display:flex;"><span>});
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 根据 pitch 和 yaw 构建旋转矩阵
-</span></span></span><span style="display:flex;"><span>Eigen<span style="color:#f92672">::</span>Matrix3d R_yaw <span style="color:#f92672">=</span> rotationZ(yaw);
-</span></span><span style="display:flex;"><span>Eigen<span style="color:#f92672">::</span>Matrix3d R_pitch <span style="color:#f92672">=</span> rotationY(pitch);
-</span></span><span style="display:flex;"><span>Eigen<span style="color:#f92672">::</span>Matrix3d R_B_E <span style="color:#f92672">=</span> R_yaw <span style="color:#f92672">*</span> R_pitch;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>T_B_E <span style="color:#f92672">=</span> buildTransformMatrix(R_B_E, t_base_to_gimbal);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 3. 收集多组数据
-</span></span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Eigen<span style="color:#f92672">::</span>Matrix4d<span style="color:#f92672">&gt;</span> A_list, B_list;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> num_poses; <span style="color:#f92672">++</span>i) {
-</span></span><span style="display:flex;"><span>    capture_calibration_data();
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 计算相对变换
-</span></span></span><span style="display:flex;"><span>    A_list.push_back(T_B_E[i].inverse() <span style="color:#f92672">*</span> T_B_E[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]);  <span style="color:#75715e">// 云台相对运动
-</span></span></span><span style="display:flex;"><span>    B_list.push_back(T_C_T[i].inverse() <span style="color:#f92672">*</span> T_C_T[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]);  <span style="color:#75715e">// 标定板相对运动
-</span></span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 4. 调用 OpenCV 手眼标定函数求解 X
-</span></span></span><span style="display:flex;"><span>cv<span style="color:#f92672">::</span>Mat R_cam2gripper, t_cam2gripper;
-</span></span><span style="display:flex;"><span>cv<span style="color:#f92672">::</span>calibrateHandEye(R_gripper2base_list, t_gripper2base_list,
-</span></span><span style="display:flex;"><span>                     R_target2cam_list, t_target2cam_list,
-</span></span><span style="display:flex;"><span>                     R_cam2gripper, t_cam2gripper,
-</span></span><span style="display:flex;"><span>                     cv<span style="color:#f92672">::</span>CALIB_HAND_EYE_TSAI);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 得到最终的手眼标定矩阵 T_E_C
-</span></span></span><span style="display:flex;"><span>Eigen<span style="color:#f92672">::</span>Matrix4d T_E_C <span style="color:#f92672">=</span> buildTransformMatrix(R_cam2gripper, t_cam2gripper);
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 1. 检测标定板，获取相机到标定板的变换 T_C_T
+</span></span></span><span class="line"><span class="cl"><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">image</span> <span class="o">=</span> <span class="n">camera</span><span class="p">.</span><span class="n">capture</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">Point2f</span><span class="o">&gt;</span> <span class="n">corners</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">findChessboardCorners</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">board_size</span><span class="p">,</span> <span class="n">corners</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cv</span><span class="o">::</span><span class="n">solvePnP</span><span class="p">(</span><span class="n">object_points</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">,</span> <span class="n">dist_coeffs</span><span class="p">,</span> <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 转换为变换矩阵
+</span></span></span><span class="line"><span class="cl">    <span class="n">T_C_T</span> <span class="o">=</span> <span class="n">buildTransformMatrix</span><span class="p">(</span><span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 2. 从电控获取云台姿态，构建基座到末端的变换 T_B_E
+</span></span></span><span class="line"><span class="cl"><span class="kt">float</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">gimbal_topic</span><span class="p">.</span><span class="n">subscribe</span><span class="p">([</span><span class="o">&amp;</span><span class="p">](</span><span class="k">auto</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pitch</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">pitch</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">yaw</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">yaw</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 根据 pitch 和 yaw 构建旋转矩阵
+</span></span></span><span class="line"><span class="cl"><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="n">R_yaw</span> <span class="o">=</span> <span class="n">rotationZ</span><span class="p">(</span><span class="n">yaw</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="n">R_pitch</span> <span class="o">=</span> <span class="n">rotationY</span><span class="p">(</span><span class="n">pitch</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="n">R_B_E</span> <span class="o">=</span> <span class="n">R_yaw</span> <span class="o">*</span> <span class="n">R_pitch</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">T_B_E</span> <span class="o">=</span> <span class="n">buildTransformMatrix</span><span class="p">(</span><span class="n">R_B_E</span><span class="p">,</span> <span class="n">t_base_to_gimbal</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 3. 收集多组数据
+</span></span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4d</span><span class="o">&gt;</span> <span class="n">A_list</span><span class="p">,</span> <span class="n">B_list</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_poses</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">capture_calibration_data</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 计算相对变换
+</span></span></span><span class="line"><span class="cl">    <span class="n">A_list</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">T_B_E</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">T_B_E</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">// 云台相对运动
+</span></span></span><span class="line"><span class="cl">    <span class="n">B_list</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">T_C_T</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">T_C_T</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">// 标定板相对运动
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 4. 调用 OpenCV 手眼标定函数求解 X
+</span></span></span><span class="line"><span class="cl"><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">R_cam2gripper</span><span class="p">,</span> <span class="n">t_cam2gripper</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cv</span><span class="o">::</span><span class="n">calibrateHandEye</span><span class="p">(</span><span class="n">R_gripper2base_list</span><span class="p">,</span> <span class="n">t_gripper2base_list</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">R_target2cam_list</span><span class="p">,</span> <span class="n">t_target2cam_list</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">R_cam2gripper</span><span class="p">,</span> <span class="n">t_cam2gripper</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">cv</span><span class="o">::</span><span class="n">CALIB_HAND_EYE_TSAI</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 得到最终的手眼标定矩阵 T_E_C
+</span></span></span><span class="line"><span class="cl"><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix4d</span> <span class="n">T_E_C</span> <span class="o">=</span> <span class="n">buildTransformMatrix</span><span class="p">(</span><span class="n">R_cam2gripper</span><span class="p">,</span> <span class="n">t_cam2gripper</span><span class="p">);</span>
 </span></span></code></pre></div><p>基本原理就是这样，具体实现需要根据自己的情况改变。</p>
 <h3 id="精度提升技巧">
 <a class="header-anchor" href="#%e7%b2%be%e5%ba%a6%e6%8f%90%e5%8d%87%e6%8a%80%e5%b7%a7"></a>
@@ -520,22 +569,22 @@ $$<p>常用的优化库包括：</p>
 </ol>
 <p>了解清楚之后，其实我们也可以对症下药了。<br>
 减小识别误差就要用精度更高的标定板，同时标定板尽可能离相机近一点，也可以在算法上实现，减小重投影误差较小的点：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#75715e">// 重投影误差检查：过滤质量差的帧
-</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// centers_3d_ 是根据标定板参数和2D角点求出来的3D角点坐标
-</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// camera_matrix_ 是相机内参矩阵
-</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// distort_coeffs 是相机畸变系数
-</span></span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>cv<span style="color:#f92672">::</span>Point2f<span style="color:#f92672">&gt;</span> projected;
-</span></span><span style="display:flex;"><span>    cv<span style="color:#f92672">::</span>projectPoints(centers_3d_, rvec, tvec, camera_matrix, distort_coeffs, projected);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> total_err <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> projected.size(); k<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>      total_err <span style="color:#f92672">+=</span> cv<span style="color:#f92672">::</span>norm(projected[k] <span style="color:#f92672">-</span> centers_2d[k]);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> mean_err <span style="color:#f92672">=</span> total_err <span style="color:#f92672">/</span> projected.size();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (mean_err <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1.0</span>) {
-</span></span><span style="display:flex;"><span>      RCLCPP_WARN(logger, <span style="color:#e6db74">&#34;[rejected] %s 重投影误差过大: %.3f px&#34;</span>, img_path.c_str(), mean_err);
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">continue</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    RCLCPP_INFO(logger, <span style="color:#e6db74">&#34;[accepted] %s 重投影误差: %.3f px&#34;</span>, img_path.c_str(), mean_err);
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">    <span class="c1">// 重投影误差检查：过滤质量差的帧
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// centers_3d_ 是根据标定板参数和2D角点求出来的3D角点坐标
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// camera_matrix_ 是相机内参矩阵
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// distort_coeffs 是相机畸变系数
+</span></span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">Point2f</span><span class="o">&gt;</span> <span class="n">projected</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cv</span><span class="o">::</span><span class="n">projectPoints</span><span class="p">(</span><span class="n">centers_3d_</span><span class="p">,</span> <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">,</span> <span class="n">distort_coeffs</span><span class="p">,</span> <span class="n">projected</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">total_err</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">projected</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">total_err</span> <span class="o">+=</span> <span class="n">cv</span><span class="o">::</span><span class="n">norm</span><span class="p">(</span><span class="n">projected</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">centers_2d</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">mean_err</span> <span class="o">=</span> <span class="n">total_err</span> <span class="o">/</span> <span class="n">projected</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">mean_err</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">RCLCPP_WARN</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="s">&#34;[rejected] %s 重投影误差过大: %.3f px&#34;</span><span class="p">,</span> <span class="n">img_path</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">mean_err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">RCLCPP_INFO</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="s">&#34;[accepted] %s 重投影误差: %.3f px&#34;</span><span class="p">,</span> <span class="n">img_path</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">mean_err</span><span class="p">);</span>
 </span></span></code></pre></div><p>减小电控误差就让电控把编码器的值发过来，同时两个位姿之间的移动角度尽可能大一点，减小编码器抖动的误差的影响。</p>
 <p>减小计算误差就让采样尽可能多，同时可以利用重投影误差去除识别查的点。</p>
 <h2 id="效果">
@@ -631,10 +680,10 @@ $$<p>常用的优化库包括：</p>
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;701</span
+          >&nbsp;4.9k</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;00:04</span>
+        <span class="icon-coffee">&nbsp;00:11</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"

@@ -3,63 +3,38 @@ languageCode = 'zh-cn'
 title = "Raymond's Blog"
 theme = "reimu"
 
-# 让 PaperMod 显示摘要列表
-[pagination]
-  pagerSize = 10
-
-[params]
-  defaultTheme = "auto"
-  ShowReadingTime = true
-  ShowPostNavLinks = true
-  ShowBreadCrumbs = true
-  ShowCodeCopyButtons = true
-  ShowToc = true
-  TocOpen = false
-
-  # 首页模式：homeInfoParams 显示个人简介 + 最新文章列表
-  [params.homeInfoParams]
-    Title = "Hi there 👋"
-    Content = "欢迎来到我的博客，这里记录技术学习、机器人开发和一些随想。"
-
-  # 社交链接（可选）
-  [[params.socialIcons]]
-    name = "github"
-    url = "https://github.com/winter-raymond"
-  [[params.socialIcons]]
-    name = "gitee"
-    url = "https://gitee.com/winter_raymond"
-  [[params.socialIcons]]
-    name = "email"
-    url = "mailto:rsy20060624@outlook.com"
-
+defaultContentLanguage = 'zh-CN'
+[languages]
+[languages.en]
+languageName = 'English'
+weight = 1
+[languages.zh-CN]
+languageName = '简体中文'
+weight = 1
+hasCJKLanguage = true
+[languages.zh-TW]
+languageName = '繁體中文'
+weight = 1
+hasCJKLanguage = true
+[languages.ja]
+languageName = '日本語'
+weight = 1
+hasCJKLanguage = true
 
 [markup.goldmark.extensions.passthrough]
 enable = true
 delimiters.block = [["\\[", "\\]"], ["$$", "$$"]]
 delimiters.inline = [["\\(", "\\)"], ["$", "$"]]
 
-[menu]
-[[menu.main]]
-  identifier = "posts"
-  name = "Posts"
-  url = "/posts/"
-  weight = 1
-[[menu.main]]
-  identifier = "archives"
-  name = "Archives"
-  url = "/archives/"
-  weight = 5
-[[menu.main]]
-  identifier = "tags"
-  name = "Tags"
-  url = "/tags/"
-  weight = 8
-[[menu.main]]
-  identifier = "wiki"
-  name = "Wiki"
-  url = "https://winter-raymond.github.io/QIE-wiki/"
-  weight = 10
+[markup.highlight]
+guessSyntax = true
+noClasses = false
 
-# 搜索功能
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+home = ["Algolia", "HTML", "RSS"]
+
+[outputFormats.Algolia]
+baseName = "algolia"
+isPlainText = true
+mediaType = "application/json"
+notAlternative = true

@@ -3,11 +3,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/zh-cn/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="http://localhost:1313/categories/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/categories/"
+                href="http://localhost:1313/en/categories/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -16,20 +22,21 @@
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="zh-tw"
                 href="http://localhost:1313/zh-tw/categories/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/</loc>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="http://localhost:1313/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/"
+                href="http://localhost:1313/en/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -38,20 +45,27 @@
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="zh-tw"
                 href="http://localhost:1313/zh-tw/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/tags/</loc>
+    <loc>http://localhost:1313/tags/robomaster/</loc>
+    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/robomaster-handeyecalibration/</loc>
+    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="http://localhost:1313/tags/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/tags/"
+                href="http://localhost:1313/en/tags/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -60,13 +74,32 @@
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="zh-tw"
                 href="http://localhost:1313/zh-tw/tags/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/tags/%E8%B0%83%E8%AF%95/</loc>
+    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
+    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E8%A7%86%E8%A7%89/</loc>
+    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/</loc>
+    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/robomaster-tracker-debug/</loc>
+    <lastmod>2026-06-04T10:00:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E7%81%AB%E6%8E%A7/</loc>
+    <lastmod>2026-06-04T10:00:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/about/</loc>
+    <lastmod>2026-06-05T00:12:52+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/archives/</loc>
+    <lastmod>2022-07-26T21:46:25+08:00</lastmod>
   </url>
 </urlset>

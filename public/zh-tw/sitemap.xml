@@ -6,40 +6,40 @@
     <loc>http://localhost:1313/zh-tw/categories/</loc>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
+                hreflang="zh-cn"
                 href="http://localhost:1313/categories/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-tw"
-                href="http://localhost:1313/zh-tw/categories/"
+                hreflang="en"
+                href="http://localhost:1313/en/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
                 href="http://localhost:1313/ja/categories/"
                 />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-tw"
+                href="http://localhost:1313/zh-tw/categories/"
+                />
   </url><url>
     <loc>http://localhost:1313/zh-tw/</loc>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
+                hreflang="zh-cn"
                 href="http://localhost:1313/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
                 href="http://localhost:1313/ja/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -50,23 +50,23 @@
     <loc>http://localhost:1313/zh-tw/tags/</loc>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="http://localhost:1313/ja/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/tags/"
+                href="http://localhost:1313/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-tw"
                 href="http://localhost:1313/zh-tw/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="http://localhost:1313/ja/tags/"
                 />
   </url>
 </urlset>

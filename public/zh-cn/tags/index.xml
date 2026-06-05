@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on My New Hugo Site</title>
+    <title>Tags on Raymond&#39;s Blog</title>
     <link>http://localhost:1313/zh-cn/tags/</link>
-    <description>Recent content from My New Hugo Site</description>
+    <description>Recent content from Raymond&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     

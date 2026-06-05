@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
+    <title>Raymond&#39;s Blog</title>
     <link>http://localhost:1313/zh-tw/algolia.json</link>
-    <description>Recent content from My New Hugo Site</description>
+    <description>Recent content from Raymond&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-tw</language>
     
