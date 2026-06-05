@@ -120,8 +120,8 @@ sidebar:
     show_common: true # whether to show common sidebar, ignored on mobile devices
 
 social:
-  # email: mailto:xxx@gmail.com
-  # github: https://github.com/yourname
+  email: mailto:rsy20060624@outlook.com
+  github: https://github.com/Winter-Raymond
   # google: https://plus.google.com/yourname
   # twitter: https://twitter.com/yourname
   # bluesky: https://bsky.app/profile/yourname
@@ -268,7 +268,7 @@ dark_mode:
 ########################################
 
 baidu_analytics: false
-google_analytics: false
+google_analytics: true
 clarity: false
 
 ########################################

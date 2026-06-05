@@ -12,12 +12,32 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Thu, 04 Jun 2026 10:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 00:15:54 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>RoboMaster 自瞄火控调试踩坑记录</title>
+      <link>http://localhost:1313/posts/robomaster-handeyecalibration/</link>
+      <pubDate>Fri, 05 Jun 2026 00:15:54 &#43;0800</pubDate>
+      <author>rsy20060624@outlook.com (Winter Raymond)</author>
+      <guid>http://localhost:1313/posts/robomaster-handeyecalibration/</guid>
+      <description>
+        <![CDATA[<h1>RoboMaster 自瞄火控调试踩坑记录</h1><p>作者：Winter Raymond（rsy20060624@outlook.com）</p>
+        
+          记录自瞄系统中手眼模块的调试过程，包括基本原理、标定手法和标定效果好坏的判断依据。
+        
+        <hr><p>本文2026-06-05首发于<a href='http://localhost:1313/'>Raymond's Blog</a>，最后修改于2026-06-05</p>]]>
+      </description>
+      
+        <category>机器人</category>
+      
+    </item>
     
     
 

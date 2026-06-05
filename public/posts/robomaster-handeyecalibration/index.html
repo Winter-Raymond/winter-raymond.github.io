@@ -1,0 +1,887 @@
+<!doctype html>
+<html
+  lang="zh-cn" 
+  data-theme-mode="auto"
+  >
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/><title>
+  RoboMaster 自瞄火控调试踩坑记录 | Winter Raymond
+</title>
+<meta name="description" content="少女祈祷中..."/>
+<script src="https://www.googletagmanager.com/gtag/js?id=true"></script>
+<script data-pjax>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'true');
+</script>
+<script>
+  window.siteConfig = JSON.parse("{\"anchor\":{\"auto\":{\"enable\":false,\"length\":60},\"explicit\":{\"enable\":false,\"marker\":\"{#anchor-\",\"prefix\":\"anchor-\"}},\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_ex15nbittbh\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
+  
+</script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+  media="print"
+  onload="this.media='all'"
+/>
+<link
+    rel="preload"
+    href="//at.alicdn.com/t/c/font_4552607_ex15nbittbh.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
+  <meta property="og:title" content="RoboMaster 自瞄火控调试踩坑记录 | Winter Raymond" />
+  <meta
+    property="og:description"
+    content="少女祈祷中..."
+  />
+  <meta property="og:url" content="http://localhost:1313/posts/robomaster-handeyecalibration/" />
+  <meta
+    property="og:site_name"
+    content="Raymond&#39;s Blog"
+  />
+  <meta property="og:image" content="https://winter-raymond.github.io/images/xunzi6.png" />
+  <meta property="article:author" content="Winter Raymond" />
+  <meta property="article:published_time" content="2026-06-05T00:15:54&#43;08:00" />
+  <meta property="article:modified_time" content="2026-06-05T00:15:54&#43;08:00" /><meta property="article:tag" content="RoboMaster, 视觉, 调试, 手眼标定" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="https://winter-raymond.github.io/images/xunzi6.png" />
+<link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css"
+    integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei&#43;Zx/1oA/0l8ysE" crossorigin="anonymous"
+    onload="this.onload=null;this.rel='stylesheet'"
+  /><link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/katex@0.16.24/dist/katex.min.css"
+    integrity="sha384-tTgKLjMYmJr94v8qu2PE5MUGSMbyN2xiH266JUB3gpm8vnnJywd1dWSOEfrFz&#43;YI" crossorigin="anonymous"
+    onload="this.onload=null;this.rel='stylesheet'"
+  /><script
+    src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"
+    
+    
+    
+    
+    integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script><link
+    rel="stylesheet"
+    href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css"
+    integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous"/></head>
+  <body><div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate"><svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+          M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg></div><div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var loaderEl = document.getElementById('loader');
+    var startLoading = () => {
+      time = Date.now();
+      loaderEl.classList.remove("loading");
+    }
+    var hideLoader = () => {
+      document.body.style.overflow = 'auto';
+      loader.classList.add('loading');
+    };
+
+    var endLoading = () => {
+      if (!time) {
+        hideLoader();
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          hideLoader();
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    loaderEl.addEventListener('click', endLoading);
+  </script><div id="copy-tooltip"></div>
+<div id="lang-tooltip">
+本文章没有找到对应的语言版本
+</div>
+<div id="heatmap-tooltip"></div><div id="container">
+      <div id="wrap"><div id="header-nav">
+  <nav id="main-nav" aria-label="Primary navigation"><a class="main-nav-link-wrap" href="/"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">首页</span>
+      </a><a class="main-nav-link-wrap" href="https://gitee.com/winter_raymond"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">Gitee</span>
+      </a><a class="main-nav-link-wrap" href="https://winter-raymond.github.io/QIE-wiki/"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">Wiki</span>
+      </a><a class="main-nav-link-wrap" href="/about"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">关于</span>
+      </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
+  </nav>
+  <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
+<header id="header" aria-label="Site header"><picture></picture>
+    <img crossorigin="anonymous" fetchpriority="high" src="https://winter-raymond.github.io/images/xunzi6.png" alt="RoboMaster 自瞄火控调试踩坑记录"><div id="header-outer">
+    <div id="header-title"><span id="logo">
+            <h1 data-aos="slide-up">RoboMaster 自瞄火控调试踩坑记录</h1>
+          </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
+  </div>
+</header><div id="content"
+          aria-label="Page content"
+          class="sidebar-left"
+            ><aside id="sidebar" aria-label="Sidebar"><div class="sidebar-wrapper-container sticky"><div class="sidebar-wrapper">
+    <div
+      class="sidebar-wrap"
+      data-aos="fade-up"
+    ><div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#原理">原理</a>
+      <ul>
+        <li><a href="#起源">起源</a></li>
+        <li><a href="#数学原理">数学原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#实现">实现</a>
+      <ul>
+        <li><a href="#代码实现">代码实现</a></li>
+        <li><a href="#精度提升技巧">精度提升技巧</a></li>
+      </ul>
+    </li>
+    <li><a href="#效果">效果</a>
+      <ul>
+        <li><a href="#效果检验">效果检验</a></li>
+        <li><a href="#效果分享">效果分享</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+</div></div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/%e7%86%8f%e5%ad%90.jpg"
+    data-sizes="auto"
+    alt="Winter Raymond"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">Winter Raymond</div>
+  <div class="sidebar-description">少女祈祷中...</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div><div class="sidebar-state-number">2</div>
+  </div>
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
+    <div>分类</div>
+    <div class="sidebar-state-number">
+      1
+    </div>
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
+    <div>标签</div>
+    <div class="sidebar-state-number">5</div>
+  </a>
+</div>
+<div class="sidebar-social" ><div class="icon-email sidebar-social-icon">
+        <a
+          href="mailto:rsy20060624@outlook.com"
+          itemprop="url"
+          target="_blank"
+          aria-label="email"
+          rel="noopener nofollow noreferrer"
+        ></a>
+      </div><div class="icon-github sidebar-social-icon">
+        <a
+          href="https://github.com/Winter-Raymond"
+          itemprop="url"
+          target="_blank"
+          aria-label="github"
+          rel="noopener nofollow noreferrer"
+        ></a>
+      </div></div><div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/"
+        aria-label="首页"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">首页</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="https://gitee.com/winter_raymond"
+        aria-label="Gitee"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Gitee</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="https://winter-raymond.github.io/QIE-wiki/"
+        aria-label="Wiki"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Wiki</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/about"
+        aria-label="关于"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">关于</div>
+    </div></div></div><div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div></div>
+  </div><div class="sidebar-widget"></div></div></aside>
+<section id="main" aria-label="Main content"><article
+  class="h-entry article"
+  itemscope
+  itemtype="https://schema.org/BlogPosting"
+>
+  <div
+    class="article-inner"
+    data-aos="fade-up"
+  >
+    <div class="article-meta"><div class="article-date">
+  <span
+    class="article-date-link icon-calendar"
+    data-aos="zoom-in"
+  >
+    <time datetime="2026-06-05 00:15:54 &#43;0800 CST" itemprop="datePublished"
+      >2026-06-05</time
+    >
+    <time style="display: none;" id="post-update-time"
+      >2026-06-05</time
+    >
+  </span></div>
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h2 id="背景">
+<a class="header-anchor" href="#%e8%83%8c%e6%99%af"></a>
+背景
+</h2><p>  RMUC2026 后，尝试解决一些比赛过程中发现的问题，主要是定位到了手眼标定，原来的手眼标定和机械给的参数差得蛮多的，而且自己的静态误差也大得离谱，估计距离8m的情况下，观察高度为0.86m的目标，观测高度为1.1～1.2m，很要命的误差，后来借鉴了小鱼的标定手法，主要参考这一篇<a href="https://zhuanlan.zhihu.com/p/388965279?share_code=9boac3GKx2TA&amp;utm_psn=2039622685618082703">文章</a>，但是实际测试下来效果，怎么说呢，对比之前的超绝误差有很大进步，虽然目前还不够，但是准备买新标定板了，新标定板到了再标，感觉算法是没问题的。</p>
+<h2 id="原理">
+<a class="header-anchor" href="#%e5%8e%9f%e7%90%86"></a>
+原理
+</h2><h3 id="起源">
+<a class="header-anchor" href="#%e8%b5%b7%e6%ba%90"></a>
+起源
+</h3><p>  了解一项技术首先要了解其起源，也就是所谓的为什么会有这项技术。所谓控制，所谓机器人，甚至所谓智能，无非两点：感知世界，进而改变世界。而对机器人来说亦是如此，感知世界靠传感器，而改变世界靠电机。而手眼标定就是为了帮助机器人更好的感知世界。感知世界的方式很多，视觉是最为重要的一种。但是在RM中，我们常用的是单目相机，这种相机感知到的世界是二维的，跟真实世界差着辈儿呢，因此，我们需要将2D坐标转化为3D，这里会用到相机内参（也需要标定）和 <strong>PnP 解算</strong>，也很重要，但不是我们此次的重点，所以就不赘述了。</p>
+<p>  通过利用上述内参标定算出的xyz是目标相对于相机坐标系的，但是<strong>RM</strong>中的弹道解算需要知道目标相对于我弹丸出射点的位置，这就涉及到3D坐标系的变换了，也就是需要求一个三维坐标系转换矩阵，也就是我们手眼标定要求的东西，也就是所谓的相机外参。</p>
+<h3 id="数学原理">
+<a class="header-anchor" href="#%e6%95%b0%e5%ad%a6%e5%8e%9f%e7%90%86"></a>
+数学原理
+</h3><h4 id="1-坐标系定义">
+<a class="header-anchor" href="#1-%e5%9d%90%e6%a0%87%e7%b3%bb%e5%ae%9a%e4%b9%89"></a>
+1. 坐标系定义
+</h4><p>在手眼标定问题中，我们需要明确以下几个坐标系：</p>
+<ul>
+<li><strong>相机坐标系 $\{C\}$</strong>：原点在相机光心，Z轴沿光轴方向，X、Y轴分别对应图像的水平和垂直方向</li>
+<li><strong>末端执行器坐标系 $\{E\}$</strong>（在RM中通常是云台坐标系或枪管坐标系）：原点在云台旋转中心或弹丸出射点</li>
+<li><strong>基座坐标系 $\{B\}$</strong>（在RM中可以是底盘坐标系或世界坐标系）：固定参考系</li>
+<li><strong>标定板坐标系 $\{T\}$</strong>：原点在标定板的某个角点，用于提供已知的空间参考</li>
+</ul>
+<h4 id="2-eye-in-hand-与-eye-to-hand">
+<a class="header-anchor" href="#2-eye-in-hand-%e4%b8%8e-eye-to-hand"></a>
+2. Eye-in-Hand 与 Eye-to-Hand
+</h4><p>根据相机的安装位置不同，手眼标定分为两种类型：</p>
+<p><strong>Eye-in-Hand（眼在手上）</strong>：相机固连在机械臂末端或云台上，随末端执行器一起运动。这是RM中的常见配置。</p>
+<p>此时需要求解的是<strong>相机坐标系相对于末端执行器坐标系的固定变换</strong>，记为 ${}^E\mathbf{T}_C$。</p>
+<p><strong>Eye-to-Hand（眼在手外）</strong>：相机固定在环境中，观察机械臂的运动。</p>
+<p>此时需要求解的是<strong>相机坐标系相对于基座坐标系的固定变换</strong>。</p>
+<p>本文主要讨论 <strong>Eye-in-Hand</strong> 的情况。</p>
+<h4 id="3-手眼标定方程推导">
+<a class="header-anchor" href="#3-%e6%89%8b%e7%9c%bc%e6%a0%87%e5%ae%9a%e6%96%b9%e7%a8%8b%e6%8e%a8%e5%af%bc"></a>
+3. 手眼标定方程推导
+</h4><h5 id="31-变换关系链">
+<a class="header-anchor" href="#31-%e5%8f%98%e6%8d%a2%e5%85%b3%e7%b3%bb%e9%93%be"></a>
+3.1 变换关系链
+</h5><p>假设我们让云台运动到两个不同的位姿，分别记为位姿1和位姿2。在每个位姿下，相机都能观测到同一个标定板。</p>
+<p>对于位姿1，从基座到标定板的变换链为：</p>
+$$
+{}^B\mathbf{T}_T = {}^B\mathbf{T}_{E1} \cdot {}^E\mathbf{T}_C \cdot {}^C\mathbf{T}_{T1}
+$$<p>对于位姿2，变换链为：</p>
+$$
+{}^B\mathbf{T}_T = {}^B\mathbf{T}_{E2} \cdot {}^E\mathbf{T}_C \cdot {}^C\mathbf{T}_{T2}
+$$<p>其中：</p>
+<ul>
+<li>${}^B\mathbf{T}_{E1}$ 和 ${}^B\mathbf{T}_{E2}$ 是云台在两个位姿下相对于基座的变换（可以通过编码器读数获得）</li>
+<li>${}^E\mathbf{T}_C$ 是我们要求解的手眼标定矩阵（<strong>固定不变</strong>）</li>
+<li>${}^C\mathbf{T}_{T1}$ 和 ${}^C\mathbf{T}_{T2}$ 是标定板相对于相机的变换（通过PnP解算获得）</li>
+<li>${}^B\mathbf{T}_T$ 是标定板相对于基座的变换（<strong>固定不变</strong>）</li>
+</ul>
+<h5 id="32-消元得到--方程">
+<a class="header-anchor" href="#32-%e6%b6%88%e5%85%83%e5%be%97%e5%88%b0--%e6%96%b9%e7%a8%8b"></a>
+3.2 消元得到 $AX=XB$ 方程
+</h5><p>由于标定板在世界中是静止的，我们可以消去 ${}^B\mathbf{T}_T$：</p>
+$$
+{}^B\mathbf{T}_{E1} \cdot {}^E\mathbf{T}_C \cdot {}^C\mathbf{T}_{T1} = {}^B\mathbf{T}_{E2} \cdot {}^E\mathbf{T}_C \cdot {}^C\mathbf{T}_{T2}
+$$<p>左右同时左乘 ${}^B\mathbf{T}_{E1}^{-1}$，右乘 ${}^C\mathbf{T}_{T2}^{-1}$：</p>
+$$
+{}^E\mathbf{T}_C \cdot {}^C\mathbf{T}_{T1} \cdot {}^C\mathbf{T}_{T2}^{-1} = {}^B\mathbf{T}_{E1}^{-1} \cdot {}^B\mathbf{T}_{E2} \cdot {}^E\mathbf{T}_C
+$$<p>令：</p>
+<ul>
+<li>$\mathbf{A} = {}^{E1}\mathbf{T}_{E2} = {}^B\mathbf{T}_{E1}^{-1} \cdot {}^B\mathbf{T}_{E2}$ （云台从位姿1到位姿2的<strong>相对运动</strong>）</li>
+<li>$\mathbf{B} = {}^{T1}\mathbf{T}_{T2} = {}^C\mathbf{T}_{T1} \cdot {}^C\mathbf{T}_{T2}^{-1}$ （标定板从观测1到观测2的<strong>相对运动</strong>）</li>
+<li>$\mathbf{X} = {}^E\mathbf{T}_C$ （待求的手眼标定矩阵）</li>
+</ul>
+<p>则得到经典的 <strong>$AX=XB$ 方程</strong>：</p>
+$$
+\mathbf{A} \mathbf{X} = \mathbf{X} \mathbf{B}
+$$<p>这是手眼标定的核心方程。</p>
+<h4 id="4--方程的求解">
+<a class="header-anchor" href="#4--%e6%96%b9%e7%a8%8b%e7%9a%84%e6%b1%82%e8%a7%a3"></a>
+4. $AX=XB$ 方程的求解
+</h4><h5 id="41-旋转与平移分离">
+<a class="header-anchor" href="#41-%e6%97%8b%e8%bd%ac%e4%b8%8e%e5%b9%b3%e7%a7%bb%e5%88%86%e7%a6%bb"></a>
+4.1 旋转与平移分离
+</h5><p>齐次变换矩阵 $\mathbf{T}$ 可以表示为：</p>
+$$
+\mathbf{T} = \begin{bmatrix}
+\mathbf{R} & \mathbf{t} \\
+\mathbf{0}^T & 1
+\end{bmatrix}
+$$<p>其中 $\mathbf{R} \in SO(3)$ 是旋转矩阵，$\mathbf{t} \in \mathbb{R}^3$ 是平移向量。</p>
+<p>将 $\mathbf{A}$、$\mathbf{B}$、$\mathbf{X}$ 都展开为旋转和平移部分：</p>
+$$
+\begin{bmatrix}
+\mathbf{R}_A & \mathbf{t}_A \\
+\mathbf{0}^T & 1
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{R}_X & \mathbf{t}_X \\
+\mathbf{0}^T & 1
+\end{bmatrix}=
+\begin{bmatrix}
+\mathbf{R}_X & \mathbf{t}_X \\
+\mathbf{0}^T & 1
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{R}_B & \mathbf{t}_B \\
+\mathbf{0}^T & 1
+\end{bmatrix}
+$$<p>展开后得到两个独立的方程：</p>
+<p><strong>旋转部分</strong>：</p>
+$$
+\mathbf{R}_A \mathbf{R}_X = \mathbf{R}_X \mathbf{R}_B
+$$<p><strong>平移部分</strong>：</p>
+$$
+\mathbf{R}_A \mathbf{t}_X + \mathbf{t}_A = \mathbf{t}_X + \mathbf{R}_X \mathbf{t}_B
+$$<p>整理平移方程：</p>
+$$
+(\mathbf{I} - \mathbf{R}_A) \mathbf{t}_X = \mathbf{R}_X \mathbf{t}_B - \mathbf{t}_A
+$$<h5 id="42-求解旋转矩阵">
+<a class="header-anchor" href="#42-%e6%b1%82%e8%a7%a3%e6%97%8b%e8%bd%ac%e7%9f%a9%e9%98%b5"></a>
+4.2 求解旋转矩阵 $\mathbf{R}_X$
+</h5><p>旋转部分的求解通常采用 <strong>Tsai-Lenz 方法</strong>或 <strong>对偶四元数方法</strong>。</p>
+<p><strong>Tsai-Lenz 方法</strong>基于罗德里格斯公式（Rodrigues&rsquo; Formula），将旋转矩阵转换为旋转轴-角表示：</p>
+$$
+\mathbf{R} = \mathbf{I} + \sin\theta \cdot [\mathbf{n}]_{\times} + (1-\cos\theta) \cdot [\mathbf{n}]_{\times}^2
+$$<p>其中 $\mathbf{n}$ 是单位旋转轴，$\theta$ 是旋转角，$[\mathbf{n}]_{\times}$ 是反对称矩阵。</p>
+<p>从 $\mathbf{R}_A \mathbf{R}_X = \mathbf{R}_X \mathbf{R}_B$ 可以推导出：</p>
+$$
+\mathbf{R}_A \mathbf{R}_X \mathbf{R}_B^T = \mathbf{R}_X
+$$<p>这意味着 $\mathbf{R}_X$ 是矩阵 $\mathbf{R}_A \cdot \mathbf{R}_B^T$ 的不动点（eigenvector corresponding to eigenvalue 1）。</p>
+<p>通过求解旋转轴约束方程，利用<strong>最小二乘法</strong>求解超定方程组得到 $\mathbf{R}_X$。</p>
+<h5 id="43-求解平移向量">
+<a class="header-anchor" href="#43-%e6%b1%82%e8%a7%a3%e5%b9%b3%e7%a7%bb%e5%90%91%e9%87%8f"></a>
+4.3 求解平移向量 $\mathbf{t}_X$
+</h5><p>在求得 $\mathbf{R}_X$ 后，将其代入平移方程：</p>
+$$
+(\mathbf{I} - \mathbf{R}_A) \mathbf{t}_X = \mathbf{R}_X \mathbf{t}_B - \mathbf{t}_A
+$$<p>这是一个关于 $\mathbf{t}_X$ 的线性方程组。利用多组观测数据（至少3组，实际中通常10-30组），构建超定方程组：</p>
+$$
+\begin{bmatrix}
+\mathbf{I} - \mathbf{R}_{A1} \\
+\mathbf{I} - \mathbf{R}_{A2} \\
+\vdots \\
+\mathbf{I} - \mathbf{R}_{An}
+\end{bmatrix}
+\mathbf{t}_X =
+\begin{bmatrix}
+\mathbf{R}_X \mathbf{t}_{B1} - \mathbf{t}_{A1} \\
+\mathbf{R}_X \mathbf{t}_{B2} - \mathbf{t}_{A2} \\
+\vdots \\
+\mathbf{R}_X \mathbf{t}_{Bn} - \mathbf{t}_{An}
+\end{bmatrix}
+$$<p>使用<strong>最小二乘法</strong>求解得到 $\mathbf{t}_X$。</p>
+<h4 id="5-优化求解">
+<a class="header-anchor" href="#5-%e4%bc%98%e5%8c%96%e6%b1%82%e8%a7%a3"></a>
+5. 优化求解
+</h4><p>初始解可能由于测量噪声、标定板检测误差、PnP解算误差等因素存在偏差。通常会采用<strong>非线性优化</strong>进行精细化求解。</p>
+<p><strong>代价函数</strong>定义为所有观测下的重投影误差或变换一致性误差：</p>
+$$
+\min_{\mathbf{R}_X, \mathbf{t}_X} \sum_{i=1}^{n} \left\| \mathbf{A}_i \mathbf{X} - \mathbf{X} \mathbf{B}_i \right\|^2
+$$<p>常用的优化库包括：</p>
+<ul>
+<li><strong>Ceres Solver</strong>（Google开源，支持自动微分）</li>
+<li><strong>g2o</strong>（通用图优化框架）</li>
+<li><strong>OpenCV的calibrateHandEye函数</strong>（集成了多种求解方法）</li>
+</ul>
+<h4 id="6-标定数据采集要求">
+<a class="header-anchor" href="#6-%e6%a0%87%e5%ae%9a%e6%95%b0%e6%8d%ae%e9%87%87%e9%9b%86%e8%a6%81%e6%b1%82"></a>
+6. 标定数据采集要求
+</h4><p>为了保证手眼标定的精度和稳定性，数据采集需要满足：</p>
+<ol>
+<li><strong>位姿多样性</strong>：云台在不同角度、不同距离下采集10-30组数据，覆盖工作空间</li>
+<li><strong>旋转充分性</strong>：确保云台在Pitch和Yaw轴上都有较大幅度的旋转（避免退化配置）</li>
+<li><strong>标定板清晰可见</strong>：避免运动模糊、过曝、遮挡</li>
+<li><strong>相对运动足够大</strong>：相邻两个位姿之间的相对旋转角度建议大于15°</li>
+</ol>
+<h4 id="7-rm中的简化情况">
+<a class="header-anchor" href="#7-rm%e4%b8%ad%e7%9a%84%e7%ae%80%e5%8c%96%e6%83%85%e5%86%b5"></a>
+7. RM中的简化情况
+</h4><p>在RoboMaster实战中，如果云台的机械结构精度较高、相机安装位置相对固定，可以采用一些简化策略：</p>
+<ul>
+<li><strong>假设旋转对齐</strong>：如果相机光轴与枪管方向近似平行，可以假设 $\mathbf{R}_X \approx \mathbf{I}$，仅标定平移向量 $\mathbf{t}_X$</li>
+<li><strong>实测法</strong>：直接测量相机光心到枪管出弹口的物理偏移（X、Y、Z三个方向的距离），构造平移矩阵</li>
+<li><strong>射击验证法</strong>：在固定距离下对准静态目标射击，根据弹着点偏差反向修正手眼参数</li>
+</ul>
+<p>但这些方法精度有限，<strong>在高水平比赛中，严谨的手眼标定仍然是必不可少的</strong>。</p>
+<h2 id="实现">
+<a class="header-anchor" href="#%e5%ae%9e%e7%8e%b0"></a>
+实现
+</h2><h3 id="代码实现">
+<a class="header-anchor" href="#%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0"></a>
+代码实现
+</h3><p>  理解原理后其实也好说，其实也好说，在有算法已经被封装好的情况下，我们需要做的其实就是获取信息。第一是标定板在相机坐标系下的位置，这个可以通过 <strong>PnP解算</strong> 实现，需要先进行内参标定，然后调用 <strong>OpenCV</strong> 的标定板识别函数即可，根据标定板的不同，调用的函数也不一样。</p>
+<p>  其次就是位姿相对于基座的变换了，这个可以通过，获取电控那边发来的数据得到，就是正常情况下，电控那边都会发来目前云台的 <strong>pitch 和 yaw</strong>，通过订阅对应的话题就可以获得当前位姿相对于基座的变换了。
+这里附上部分伪代码实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// 1. 检测标定板，获取相机到标定板的变换 T_C_T
+</span></span></span><span style="display:flex;"><span>cv<span style="color:#f92672">::</span>Mat image <span style="color:#f92672">=</span> camera.capture();
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>cv<span style="color:#f92672">::</span>Point2f<span style="color:#f92672">&gt;</span> corners;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> found <span style="color:#f92672">=</span> cv<span style="color:#f92672">::</span>findChessboardCorners(image, board_size, corners);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (found) {
+</span></span><span style="display:flex;"><span>    cv<span style="color:#f92672">::</span>Mat rvec, tvec;
+</span></span><span style="display:flex;"><span>    cv<span style="color:#f92672">::</span>solvePnP(object_points, corners, camera_matrix, dist_coeffs, rvec, tvec);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 转换为变换矩阵
+</span></span></span><span style="display:flex;"><span>    T_C_T <span style="color:#f92672">=</span> buildTransformMatrix(rvec, tvec);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 2. 从电控获取云台姿态，构建基座到末端的变换 T_B_E
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">float</span> pitch, yaw;
+</span></span><span style="display:flex;"><span>gimbal_topic.subscribe([<span style="color:#f92672">&amp;</span>](<span style="color:#66d9ef">auto</span> msg) {
+</span></span><span style="display:flex;"><span>    pitch <span style="color:#f92672">=</span> msg.pitch;
+</span></span><span style="display:flex;"><span>    yaw <span style="color:#f92672">=</span> msg.yaw;
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 根据 pitch 和 yaw 构建旋转矩阵
+</span></span></span><span style="display:flex;"><span>Eigen<span style="color:#f92672">::</span>Matrix3d R_yaw <span style="color:#f92672">=</span> rotationZ(yaw);
+</span></span><span style="display:flex;"><span>Eigen<span style="color:#f92672">::</span>Matrix3d R_pitch <span style="color:#f92672">=</span> rotationY(pitch);
+</span></span><span style="display:flex;"><span>Eigen<span style="color:#f92672">::</span>Matrix3d R_B_E <span style="color:#f92672">=</span> R_yaw <span style="color:#f92672">*</span> R_pitch;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>T_B_E <span style="color:#f92672">=</span> buildTransformMatrix(R_B_E, t_base_to_gimbal);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 3. 收集多组数据
+</span></span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Eigen<span style="color:#f92672">::</span>Matrix4d<span style="color:#f92672">&gt;</span> A_list, B_list;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> num_poses; <span style="color:#f92672">++</span>i) {
+</span></span><span style="display:flex;"><span>    capture_calibration_data();
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 计算相对变换
+</span></span></span><span style="display:flex;"><span>    A_list.push_back(T_B_E[i].inverse() <span style="color:#f92672">*</span> T_B_E[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]);  <span style="color:#75715e">// 云台相对运动
+</span></span></span><span style="display:flex;"><span>    B_list.push_back(T_C_T[i].inverse() <span style="color:#f92672">*</span> T_C_T[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]);  <span style="color:#75715e">// 标定板相对运动
+</span></span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 4. 调用 OpenCV 手眼标定函数求解 X
+</span></span></span><span style="display:flex;"><span>cv<span style="color:#f92672">::</span>Mat R_cam2gripper, t_cam2gripper;
+</span></span><span style="display:flex;"><span>cv<span style="color:#f92672">::</span>calibrateHandEye(R_gripper2base_list, t_gripper2base_list,
+</span></span><span style="display:flex;"><span>                     R_target2cam_list, t_target2cam_list,
+</span></span><span style="display:flex;"><span>                     R_cam2gripper, t_cam2gripper,
+</span></span><span style="display:flex;"><span>                     cv<span style="color:#f92672">::</span>CALIB_HAND_EYE_TSAI);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 得到最终的手眼标定矩阵 T_E_C
+</span></span></span><span style="display:flex;"><span>Eigen<span style="color:#f92672">::</span>Matrix4d T_E_C <span style="color:#f92672">=</span> buildTransformMatrix(R_cam2gripper, t_cam2gripper);
+</span></span></code></pre></div><p>基本原理就是这样，具体实现需要根据自己的情况改变。</p>
+<h3 id="精度提升技巧">
+<a class="header-anchor" href="#%e7%b2%be%e5%ba%a6%e6%8f%90%e5%8d%87%e6%8a%80%e5%b7%a7"></a>
+精度提升技巧
+</h3><p>  依旧，了解原理后其实就可以 get 到主要的误差来源了：</p>
+<ol>
+<li>
+<p>识别误差：识别角点有误差导致 $\mathbf{B}$ 计算有误差</p>
+</li>
+<li>
+<p>电控误差：电控发过来的 pitch 和 yaw 和真实值对比有误差，导致 $\mathbf{A}$ 计算有误差（就比如我们的电控之前发来的值是IMU的值，还飘着呢）</p>
+</li>
+<li>
+<p>计算误差：最后最小二乘计算时误差较大</p>
+</li>
+</ol>
+<p>了解清楚之后，其实我们也可以对症下药了。<br>
+减小识别误差就要用精度更高的标定板，同时标定板尽可能离相机近一点，也可以在算法上实现，减小重投影误差较小的点：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#75715e">// 重投影误差检查：过滤质量差的帧
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// centers_3d_ 是根据标定板参数和2D角点求出来的3D角点坐标
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// camera_matrix_ 是相机内参矩阵
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// distort_coeffs 是相机畸变系数
+</span></span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>cv<span style="color:#f92672">::</span>Point2f<span style="color:#f92672">&gt;</span> projected;
+</span></span><span style="display:flex;"><span>    cv<span style="color:#f92672">::</span>projectPoints(centers_3d_, rvec, tvec, camera_matrix, distort_coeffs, projected);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> total_err <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> projected.size(); k<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>      total_err <span style="color:#f92672">+=</span> cv<span style="color:#f92672">::</span>norm(projected[k] <span style="color:#f92672">-</span> centers_2d[k]);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> mean_err <span style="color:#f92672">=</span> total_err <span style="color:#f92672">/</span> projected.size();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (mean_err <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1.0</span>) {
+</span></span><span style="display:flex;"><span>      RCLCPP_WARN(logger, <span style="color:#e6db74">&#34;[rejected] %s 重投影误差过大: %.3f px&#34;</span>, img_path.c_str(), mean_err);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    RCLCPP_INFO(logger, <span style="color:#e6db74">&#34;[accepted] %s 重投影误差: %.3f px&#34;</span>, img_path.c_str(), mean_err);
+</span></span></code></pre></div><p>减小电控误差就让电控把编码器的值发过来，同时两个位姿之间的移动角度尽可能大一点，减小编码器抖动的误差的影响。</p>
+<p>减小计算误差就让采样尽可能多，同时可以利用重投影误差去除识别查的点。</p>
+<h2 id="效果">
+<a class="header-anchor" href="#%e6%95%88%e6%9e%9c"></a>
+效果
+</h2><h3 id="效果检验">
+<a class="header-anchor" href="#%e6%95%88%e6%9e%9c%e6%a3%80%e9%aa%8c"></a>
+效果检验
+</h3><p>  这个更简单了，保证我方机器人与目标位置固定不变，始终保证我方机器人观测到目标的情况下，上下左右晃机器人的云台，观测到的目标坐标与位姿波动越小，标定得越好。</p>
+<h3 id="效果分享">
+<a class="header-anchor" href="#%e6%95%88%e6%9e%9c%e5%88%86%e4%ba%ab"></a>
+效果分享
+</h3><p>  留个白，等新标定板到了再写，并对比一下。</p>
+<h2 id="总结">
+<a class="header-anchor" href="#%e6%80%bb%e7%bb%93"></a>
+总结
+</h2><p>  也留个白。</p>
+<hr>
+<p><em>装备：RoboMaster 英雄，HikVision 12mm 工业相机，Intel</em></p>
+</div>
+    <footer class="article-footer"><ul class="article-category-list"><li class="article-tag-list-item" data-aos="zoom-in">
+    <a
+      class="article-category-link"
+      href="/categories/%e6%9c%ba%e5%99%a8%e4%ba%ba"
+      data-aos="zoom-in"
+      >机器人</a
+    >
+    </li></ul>
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/robomaster"
+        rel="tag"
+        >RoboMaster</a
+      >
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/%e8%a7%86%e8%a7%89"
+        rel="tag"
+        >视觉</a
+      >
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/%e8%b0%83%e8%af%95"
+        rel="tag"
+        >调试</a
+      >
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/%e6%89%8b%e7%9c%bc%e6%a0%87%e5%ae%9a"
+        rel="tag"
+        >手眼标定</a
+      >
+    </li></ul>
+</footer>
+  </div><nav
+    id="article-nav"
+    aria-label="Article navigation"
+    data-aos="fade-up"
+  ><div class="article-nav-link-wrap left"><img
+              data-src="https://winter-raymond.github.io/images/xunzi3.png"
+              data-sizes="auto"
+              alt="RoboMaster 自瞄火控调试踩坑记录"
+              class="lazyload"
+            /><a
+          href="/posts/robomaster-tracker-debug/"
+          aria-label="前一篇:RoboMaster 自瞄火控调试踩坑记录"
+          title="前一篇:RoboMaster 自瞄火控调试踩坑记录"
+        ></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">RoboMaster 自瞄火控调试踩坑记录</h3>
+      </div></nav></article></section>
+        </div><footer id="footer" aria-label="Site footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info"><div>
+      <span class="icon-copyright"></span>2020-2026<span class="footer-info-sep rotate"></span>Winter Raymond
+    </div><div>
+        基于&nbsp;<a
+          href="https://gohugo.io/"
+          target="_blank"
+          rel="noopener nofollow noreferrer"
+          >Hugo</a
+        >&nbsp;Theme.<a
+          href="https://github.com/D-Sketon/hugo-theme-reimu"
+          target="_blank"
+          rel="noopener nofollow noreferrer"
+          >Reimu</a
+        >
+      </div><div>
+        <span class="icon-brush"
+          >&nbsp;701</span
+        >
+        &nbsp;|&nbsp;
+        <span class="icon-coffee">&nbsp;00:04</span>
+      </div><div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv"
+          >总访问量&nbsp;<span
+            id="busuanzi_value_site_pv"
+          ></span
+        ></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv"
+          >总访客量&nbsp;<span
+            id="busuanzi_value_site_uv"
+          ></span
+        ></span>
+      </div></div>
+</footer>
+<div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div><div id="mask" class="hide"></div>
+      </div><nav id="mobile-nav" aria-label="Mobile navigation">
+  <div class="sidebar-wrap"><div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#原理">原理</a>
+      <ul>
+        <li><a href="#起源">起源</a></li>
+        <li><a href="#数学原理">数学原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#实现">实现</a>
+      <ul>
+        <li><a href="#代码实现">代码实现</a></li>
+        <li><a href="#精度提升技巧">精度提升技巧</a></li>
+      </ul>
+    </li>
+    <li><a href="#效果">效果</a>
+      <ul>
+        <li><a href="#效果检验">效果检验</a></li>
+        <li><a href="#效果分享">效果分享</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+</div></div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/%e7%86%8f%e5%ad%90.jpg"
+    data-sizes="auto"
+    alt="Winter Raymond"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">Winter Raymond</div>
+  <div class="sidebar-description">少女祈祷中...</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div><div class="sidebar-state-number">2</div>
+  </div>
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
+    <div>分类</div>
+    <div class="sidebar-state-number">
+      1
+    </div>
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
+    <div>标签</div>
+    <div class="sidebar-state-number">5</div>
+  </a>
+</div>
+<div class="sidebar-social" ><div class="icon-email sidebar-social-icon">
+        <a
+          href="mailto:rsy20060624@outlook.com"
+          itemprop="url"
+          target="_blank"
+          aria-label="email"
+          rel="noopener nofollow noreferrer"
+        ></a>
+      </div><div class="icon-github sidebar-social-icon">
+        <a
+          href="https://github.com/Winter-Raymond"
+          itemprop="url"
+          target="_blank"
+          aria-label="github"
+          rel="noopener nofollow noreferrer"
+        ></a>
+      </div></div><div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/"
+        aria-label="首页"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">首页</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="https://gitee.com/winter_raymond"
+        aria-label="Gitee"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Gitee</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="https://winter-raymond.github.io/QIE-wiki/"
+        aria-label="Wiki"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Wiki</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/about"
+        aria-label="关于"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">关于</div>
+    </div></div></div></div><div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div></nav>
+</div><script
+    src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"
+    
+    
+    
+    
+    integrity="sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf&#43;e" crossorigin="anonymous"></script><script
+    src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"
+    
+    
+    
+    
+    integrity="sha384-J08i8An/QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script><script
+    src="https://npm.webcache.cn/material-theme@1.0.0/dist/material-theme.umd.js"
+    
+    
+    
+    
+    integrity="sha384-vLev0II0HKFaxkcm&#43;/7kX5IGwVFBASkGchU311wmU/veIj2bB0UcBkQbW6yw2asK" crossorigin="anonymous"></script><script src="/js/main.js"  ></script><script src="/js/aos.js"  ></script><script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", aosInit);
+    } else {
+      aosInit();
+    }
+  </script><script src="/js/pjax_main.js" data-pjax ></script><script>
+  var setupFirework = () => {
+    if (! false  || !window.matchMedia('(max-width: 768px)').matches) {
+      if (window.firework) {
+        const options = JSON.parse("{\"excludeelements\":[\"a\",\"button\"],\"particles\":[{\"colors\":[\"var(--red-1)\",\"var(--red-2)\",\"var(--red-3)\",\"var(--red-4)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"emit\"],\"number\":20,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.3,0.5],\"radius\":[16,32]}},{\"colors\":[\"var(--red-0)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"diffuse\"],\"number\":1,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.2,0.5],\"lineWidth\":6,\"radius\":20}}]}");
+        options.excludeElements = options.excludeelements;
+        delete options.excludeelements;
+        window.firework(options);
+      }
+    }
+  }
+</script><script
+    src="https://npm.webcache.cn/mouse-firework@0.2.0/dist/index.umd.js"
+    defer
+    
+    
+    onload="setupFirework()"
+    integrity="sha384-qi9WggRt19tv8Vc7pCHW3ulMNLwrn515zaLEWZjl1px07vz8&#43;pUoWX8n1rgq282T" crossorigin="anonymous"></script>
+
+<div id="lazy-script">
+  <div><script data-pjax>
+        window.REIMU_POST = {
+          author: "Winter Raymond",
+          title: "RoboMaster 自瞄火控调试踩坑记录",
+          url: "http:\/\/localhost:1313\/posts\/robomaster-handeyecalibration\/",
+          description: "记录自瞄系统中手眼模块的调试过程，包括基本原理、标定手法和标定效果好坏的判断依据。",
+          cover: "https:\/\/winter-raymond.github.io\/images\/xunzi6.png",
+        };
+      </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
+          if (_$$(`${gallery} ${children}`).length > 0) {
+            new PhotoSwipeLightbox({
+              gallery,
+              children,pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")}).init();
+          }
+        }
+        const pswp = () => {
+          initPswp('.article-entry', 'a.article-gallery-item');
+          initPswp('.article-gallery', 'a.article-gallery-item');
+        }
+        pswp()
+      </script><script
+    src="https://npm.webcache.cn/katex@0.16.24/dist/katex.min.js"
+    
+    
+    data-pjax
+    
+    integrity="sha384-MWNUH0WmtsYGhn2cbH6ELRCbf9LG3QDqCC&#43;gqPB3IBNO35xjZK3Ejb6oONRpDbPg" crossorigin="anonymous"></script><script
+    src="https://npm.webcache.cn/katex@0.16.24/dist/contrib/auto-render.min.js"
+    
+    
+    data-pjax
+    
+    integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv&#43;fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"></script><script data-pjax>
+          var renderMath = () => {
+            if (!window.renderMathInElement) return;
+            window.renderMathInElement(_$("article"), {
+              delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "\\[", right: "\\]", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+              ],
+            });
+          };
+          if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", renderMath, { once: true });
+          } else {
+            renderMath();
+          }
+        </script></div>
+</div><script
+    src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js"
+    
+    async
+    
+    
+    integrity="sha384-0M75wtSkhjIInv4coYlaJU83&#43;OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id&#43;S" crossorigin="anonymous"></script><script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+  </script><script>
+  const reimuCopyright = String.raw`
+   ______     ______     __     __    __     __  __    
+  /\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+  \ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+   \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+    \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                    
+  `;
+  console.log(String.raw`%c ${reimuCopyright}`, "color: #ff5252;");
+  console.log(
+    "%c Theme.Reimu" + " %c https://github.com/D-Sketon/hugo-theme-reimu ",
+    "color: white; background: #ff5252; padding:5px 0;",
+    "padding:4px;border:1px solid #ff5252;",
+  );
+</script></body>
+</html>

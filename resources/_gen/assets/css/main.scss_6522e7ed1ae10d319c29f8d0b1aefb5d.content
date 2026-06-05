@@ -331,6 +331,10 @@ body [data-aos="zoom-in"] {
   content: "\e619";
 }
 
+.icon-email:before {
+  content: "\e63c";
+}
+
 .sidebar-toc-btn:before {
   font-family: "iconfont";
   content: "\e633";
@@ -3105,6 +3109,18 @@ mjx-container::-webkit-scrollbar {
 
 .sidebar-social-icon:hover {
   transform: scale(1.2);
+}
+
+.icon-email {
+  color: var(--red-2);
+}
+
+.icon-github {
+  color: #191717;
+}
+
+[data-theme="dark"] .icon-github {
+  color: #bc88ff;
 }
 
 .sidebar-menu {

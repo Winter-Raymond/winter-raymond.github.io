@@ -8,7 +8,7 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 /><title>
-  标签 | Winter Raymond
+  RoboMaster 自瞄火控调试踩坑记录 | Winter Raymond
 </title>
 <meta name="description" content="少女祈祷中..."/>
 <script src="https://www.googletagmanager.com/gtag/js?id=true"></script>
@@ -46,12 +46,12 @@
     type="font/woff2"
     crossorigin="anonymous"
   /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
-  <meta property="og:title" content="标签 | Winter Raymond" />
+  <meta property="og:title" content="RoboMaster 自瞄火控调试踩坑记录 | Winter Raymond" />
   <meta
     property="og:description"
     content="少女祈祷中..."
   />
-  <meta property="og:url" content="http://localhost:1313/tags/" />
+  <meta property="og:url" content="http://localhost:1313/posts/your-post-title/" />
   <meta
     property="og:site_name"
     content="Raymond&#39;s Blog"
@@ -59,7 +59,7 @@
   <meta property="og:image" content="http://localhost:1313/images/%E7%86%8F%E5%AD%90.jpg" />
   <meta property="article:author" content="Winter Raymond" />
   <meta property="article:published_time" content="2026-06-05T00:15:54&#43;08:00" />
-  <meta property="article:modified_time" content="2026-06-05T00:15:54&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/%E7%86%8F%E5%AD%90.jpg" /><link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/index.xml" title="Raymond's Blog">
+  <meta property="article:modified_time" content="2026-06-05T00:15:54&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/%E7%86%8F%E5%AD%90.jpg" />
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
     rel="preload"
     as="style"
@@ -133,20 +133,38 @@
       </a><a class="main-nav-link-wrap" href="/about"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">关于</span>
       </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
-  <nav id="sub-nav" aria-label="Secondary navigation"><a id="nav-rss-link" class="nav-icon" href="/tags/index.xml" title="RSS 订阅" aria-label="RSS 订阅" target="_blank"></a></nav></div>
-<header id="header" aria-label="Site header"><picture></picture><img crossorigin="anonymous" fetchpriority="high" src="/images/%e7%86%8f%e5%ad%90.jpg" alt="Tags"><div id="header-outer">
+  <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
+<header id="header" aria-label="Site header"><picture></picture>
+        <img crossorigin="anonymous" fetchpriority="high" src="https://winter-raymond.github.io/images/xunzi3.png" alt="RoboMaster 自瞄火控调试踩坑记录"><div id="header-outer">
     <div id="header-title"><span id="logo">
-            <h1 data-aos="slide-up">标签</h1>
+            <h1 data-aos="slide-up">RoboMaster 自瞄火控调试踩坑记录</h1>
           </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
   </div>
 </header><div id="content"
           aria-label="Page content"
           class="sidebar-left"
-            ><aside id="sidebar" aria-label="Sidebar"><div class="sidebar-wrapper-container "><div class="sidebar-wrapper">
+            ><aside id="sidebar" aria-label="Sidebar"><div class="sidebar-wrapper-container sticky"><div class="sidebar-wrapper">
     <div
       class="sidebar-wrap"
       data-aos="fade-up"
-    ><div class="sidebar-author">
+    ><div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#原理">原理</a>
+      <ul>
+        <li><a href="#应用场景">应用场景</a></li>
+        <li><a href="#排查">排查</a></li>
+        <li><a href="#解决">解决</a></li>
+      </ul>
+    </li>
+    <li><a href="#效果">效果</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+</div></div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img
     data-src="/avatar/%e7%86%8f%e5%ad%90.jpg"
     data-sizes="auto"
@@ -168,7 +186,7 @@
   </a>
   <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>标签</div>
-    <div class="sidebar-state-number">5</div>
+    <div class="sidebar-state-number">4</div>
   </a>
 </div>
 <div class="sidebar-social" ><div class="icon-email sidebar-social-icon">
@@ -211,201 +229,98 @@
         href="/about"
         aria-label="关于"
       ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">关于</div>
-    </div></div></div>
-  </div><div class="sidebar-widget"><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
-    >
-      <div style="display: flex; justify-content: space-between;">
-        <h3 class="widget-title">分类</h3></div>
-      <div class="widget">
-        <ul class="category-list"><li class="category-list-item">
-                <a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/" 
-                  title="机器人"
-                  >机器人</a
-                >
-              </li></ul>
-      </div>
-    </div>
-  </div><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
-    >
-      <div style="display: flex; justify-content: space-between;">
-        <h3 class="widget-title">标签</h3></div>
-      <div class="widget">
-        <ul class="tag-list" itemprop="keywords"><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/robomaster/"
-                  aria-label="标签: RoboMaster"
-                  title="RoboMaster"
-                >
-                  RoboMaster
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/"
-                  aria-label="标签: 手眼标定"
-                  title="手眼标定"
-                >
-                  手眼标定
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/%E7%81%AB%E6%8E%A7/"
-                  aria-label="标签: 火控"
-                  title="火控"
-                >
-                  火控
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/%E8%A7%86%E8%A7%89/"
-                  aria-label="标签: 视觉"
-                  title="视觉"
-                >
-                  视觉
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/%E8%B0%83%E8%AF%95/"
-                  aria-label="标签: 调试"
-                  title="调试"
-                >
-                  调试
-                </a>
-              </li></ul>
-      </div>
-    </div>
-  </div><div class="widget-wrapper">
+    </div></div></div><div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div></div>
+  </div><div class="sidebar-widget"></div></div></aside>
+<section id="main" aria-label="Main content"><article
+  class="h-entry article"
+  itemscope
+  itemtype="https://schema.org/BlogPosting"
+>
   <div
-    class="widget-wrap"
+    class="article-inner"
     data-aos="fade-up"
   >
-    <h3 class="widget-title">标签云</h3><div class="widget tagcloud"><a
-            style="font-size:20px"
-            href="/tags/robomaster/"
-            aria-label="标签: RoboMaster"
-            >RoboMaster</a
-          ><a
-            style="font-size:10px"
-            href="/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/"
-            aria-label="标签: 手眼标定"
-            >手眼标定</a
-          ><a
-            style="font-size:10px"
-            href="/tags/%E7%81%AB%E6%8E%A7/"
-            aria-label="标签: 火控"
-            >火控</a
-          ><a
-            style="font-size:20px"
-            href="/tags/%E8%A7%86%E8%A7%89/"
-            aria-label="标签: 视觉"
-            >视觉</a
-          ><a
-            style="font-size:20px"
-            href="/tags/%E8%B0%83%E8%AF%95/"
-            aria-label="标签: 调试"
-            >调试</a
-          ></div>
-  </div>
-</div><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
+    <div class="article-meta"><div class="article-date">
+  <span
+    class="article-date-link icon-calendar"
+    data-aos="zoom-in"
+  >
+    <time datetime="2026-06-05 00:15:54 &#43;0800 CST" itemprop="datePublished"
+      >2026-06-05</time
     >
-      <h3 class="widget-title">最新文章</h3>
-      <div class="widget">
-        <ul><li>
-              <a href="/posts/robomaster-handeyecalibration/" title="RoboMaster 自瞄火控调试踩坑记录">RoboMaster 自瞄火控调试踩坑记录</a>
-            </li><li>
-              <a href="/posts/robomaster-tracker-debug/" title="RoboMaster 自瞄火控调试踩坑记录">RoboMaster 自瞄火控调试踩坑记录</a>
-            </li></ul>
-      </div>
-    </div>
-  </div></div></div></aside>
-<section id="main" aria-label="Main content"><div
-    class="archives-outer-wrap"
+    <time style="display: none;" id="post-update-time"
+      >2026-06-05</time
+    >
+  </span></div>
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h2 id="背景">
+<a class="header-anchor" href="#%e8%83%8c%e6%99%af"></a>
+背景
+</h2><p>  RMUC2026后，尝试解决一些比赛过程中发现的问题，主要是定位到了手眼标定，原来的手眼标定和机械给的参数差得蛮多的，而且自己的静态误差也大得离谱，估计距离8m的情况下，观察高度为0.86m的目标，观测高度为1.1～1.2m，很要命的误差，后来借鉴了小鱼的标定手法，主要参考这一篇<a href="https://zhuanlan.zhihu.com/p/388965279?share_code=9boac3GKx2TA&amp;utm_psn=2039622685618082703">文章</a>，但是实际测试下来效果，怎么说呢，对比之前的超绝误差有很大进步，虽然目前还不够，但是准备买新标定板了，新标定板到了再标，感觉算法是没问题的。</p>
+<h2 id="原理">
+<a class="header-anchor" href="#%e5%8e%9f%e7%90%86"></a>
+原理
+</h2><h3 id="应用场景">
+<a class="header-anchor" href="#%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af"></a>
+应用场景
+</h3><p>  我们英雄打击前哨站的策略是定头，就是枪管始终指向机器人中心，等待装甲板转过来（因为电机劲儿太小控不住云台），所以按理来说弹丸落点就算高度打不准，也应该一直打在机器人中心位置，但实际就是弹丸落点很散，有时左偏有时右偏，整体效果很难绷。</p>
+<h3 id="排查">
+<a class="header-anchor" href="#%e6%8e%92%e6%9f%a5"></a>
+排查
+</h3><p>  最开始觉得是擦枪管的问题，就用粉笔在枪管里面画了一小圈圆，如果擦的话粉笔会被擦掉，后来确实有这个问题，但是似乎不是根源，于是接着排查。</p>
+<p>  后面又觉得是观测问题，比如镜头上有指纹之类的，后来看了一下确实有，擦一下就好了。哦，还有超绝坑货，之前为了保护那个镜头加的一个透明的亚克力板（感觉材质应该是），我真服了，那个板都损坏了，我透过那个板子看前哨站都模糊，艹，赶紧卸下来，以后也别加了。</p>
+<p>  用 plotjuggler 看了曲线，大概就是 /processor/target 也就是过了卡尔曼滤波的数据，应该都是目标相对于弹丸发射点的位置或者速度，测量了一下，发现距离上也没什么问题，实际距离可能在 8.2～8.3m，但是观测距离在 8.28m 还算不错，又看了电控的返回值和我们的目标值，发现其实也还好，跟得算不错了，没有稳态误差，后来觉得可能还是手眼标定的问题，因为距离近了就好了，但是如果是手眼标定的问题，为什么在其它条件都相同的情况下会有时候偏左，有时候偏右呢？甚至车也没有重新上电，没有重启代码。百思不得其解，然后就晚上7:30了，要润去上选修课了，上课的时候也在想。
+最后想到一个点，之前由于为了表示自己尊重科学，过于 <strong>相信</strong> 卡尔曼滤波了，直接在前哨站的火控逻辑里加了一个：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> pred_cx <span style="color:#f92672">=</span> cur_x <span style="color:#f92672">+</span> vx <span style="color:#f92672">*</span> predict_time;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> pred_cy <span style="color:#f92672">=</span> cur_y <span style="color:#f92672">+</span> vy <span style="color:#f92672">*</span> predict_time;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> aim_yaw <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>atan2(cur_y, cur_x);
+</span></span></code></pre></div><p>  但是，注意一个点，由于卡尔曼滤波只是进行状态估计，所以 <strong>vx</strong> 和 <strong>vy</strong> 都只能是一个较低的值，很难是正儿八经的0.0，加上8m的直线距离下，12m/s弹丸飞行时间接近 <strong>1s</strong> 这直接引入了几个cm量级的误差。
+这样既可以解释他为什么左右飘，又可以解释他为什么飘移动是随机的。</p>
+<h3 id="解决">
+<a class="header-anchor" href="#%e8%a7%a3%e5%86%b3"></a>
+解决
+</h3><p>  其实也好说，在前哨站逻辑里的<strong>vx</strong>和<strong>vy</strong>置零就行了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> vx    <span style="color:#f92672">=</span> msg<span style="color:#f92672">-&gt;</span>velocity.x;
+</span></span><span style="display:flex;"><span>    vx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> vy    <span style="color:#f92672">=</span> msg<span style="color:#f92672">-&gt;</span>velocity.y;
+</span></span><span style="display:flex;"><span>    vy <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span></code></pre></div><p>  注意有三个函数 <code>processOutpost</code>、<code>processOutpostFallback</code> 和 <code>processOutpostStatic</code> 都得改
+别怪我哦，这样先写一下嘛，以后再正儿八经改。</p>
+<h2 id="效果">
+<a class="header-anchor" href="#%e6%95%88%e6%9e%9c"></a>
+效果
+</h2><p>  正反转效果很好，至少yaw方向是正确的，而且只打中心了，说明确实是这个问题。
+真要抽自己了</p>
+<p><img src="../../assets/imgs/%E8%80%B3%E5%85%89.gif" alt=""></p>
+<h2 id="总结">
+<a class="header-anchor" href="#%e6%80%bb%e7%bb%93"></a>
+总结
+</h2><p>  力竭了，真要燃尽了，又是被抽象bug折磨的n天，艹。下次还是注意点儿工程实现吧，尽力实现贴近工程的实现。</p>
+<hr>
+<p><em>装备：RoboMaster 英雄，HikVision 12mm 工业相机，Intel</em></p>
+</div>
+    <footer class="article-footer"><ul class="article-category-list"></ul>
+<ul class="article-tag-list" itemprop="keywords"></ul>
+</footer>
+  </div><nav
+    id="article-nav"
+    aria-label="Article navigation"
     data-aos="fade-up"
-  >
-    <div
-      class="
-        tag-wrap
-      "
-    ><div
-          class="
-            archives-tag-list-item
-          "
-          data-aos="zoom-in"
-        >
-          <a
-            class="
-              archives-tag-list-link
-            "
-            href="/tags/robomaster/"
-            >RoboMaster</a
-          >
-        </div><div
-          class="
-            archives-tag-list-item
-          "
-          data-aos="zoom-in"
-        >
-          <a
-            class="
-              archives-tag-list-link
-            "
-            href="/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/"
-            >手眼标定</a
-          >
-        </div><div
-          class="
-            archives-tag-list-item
-          "
-          data-aos="zoom-in"
-        >
-          <a
-            class="
-              archives-tag-list-link
-            "
-            href="/tags/%E8%A7%86%E8%A7%89/"
-            >视觉</a
-          >
-        </div><div
-          class="
-            archives-tag-list-item
-          "
-          data-aos="zoom-in"
-        >
-          <a
-            class="
-              archives-tag-list-link
-            "
-            href="/tags/%E8%B0%83%E8%AF%95/"
-            >调试</a
-          >
-        </div><div
-          class="
-            archives-tag-list-item
-          "
-          data-aos="zoom-in"
-        >
-          <a
-            class="
-              archives-tag-list-link
-            "
-            href="/tags/%E7%81%AB%E6%8E%A7/"
-            >火控</a
-          >
-        </div></div>
-  </div></section>
+  ><div class="article-nav-link-wrap left"><img
+              data-src="https://winter-raymond.github.io/images/xunzi3.png"
+              data-sizes="auto"
+              alt="RoboMaster 自瞄火控调试踩坑记录"
+              class="lazyload"
+            /><a
+          href="/posts/robomaster-tracker-debug/"
+          aria-label="前一篇:RoboMaster 自瞄火控调试踩坑记录"
+          title="前一篇:RoboMaster 自瞄火控调试踩坑记录"
+        ></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">RoboMaster 自瞄火控调试踩坑记录</h3>
+      </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
     <div class="footer-line"></div>
@@ -426,7 +341,7 @@
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;120</span
+          >&nbsp;158</span
         >
         &nbsp;|&nbsp;
         <span class="icon-coffee">&nbsp;00:02</span>
@@ -451,7 +366,24 @@
             <div class="arrow-up"></div>
           </div><div id="mask" class="hide"></div>
       </div><nav id="mobile-nav" aria-label="Mobile navigation">
-  <div class="sidebar-wrap"><div class="sidebar-author">
+  <div class="sidebar-wrap"><div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#原理">原理</a>
+      <ul>
+        <li><a href="#应用场景">应用场景</a></li>
+        <li><a href="#排查">排查</a></li>
+        <li><a href="#解决">解决</a></li>
+      </ul>
+    </li>
+    <li><a href="#效果">效果</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+</div></div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img
     data-src="/avatar/%e7%86%8f%e5%ad%90.jpg"
     data-sizes="auto"
@@ -473,7 +405,7 @@
   </a>
   <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>标签</div>
-    <div class="sidebar-state-number">5</div>
+    <div class="sidebar-state-number">4</div>
   </a>
 </div>
 <div class="sidebar-social" ><div class="icon-email sidebar-social-icon">
@@ -516,7 +448,10 @@
         href="/about"
         aria-label="关于"
       ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">关于</div>
-    </div></div></div></nav>
+    </div></div></div></div><div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div></nav>
 </div><script
     src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"
     
@@ -572,9 +507,9 @@
   <div><script data-pjax>
         window.REIMU_POST = {
           author: "Winter Raymond",
-          title: "Tags",
-          url: "http:\/\/localhost:1313\/tags\/",
-          description: "",
+          title: "RoboMaster 自瞄火控调试踩坑记录",
+          url: "http:\/\/localhost:1313\/posts\/your-post-title\/",
+          description: " 背景 RMUC2026后，尝试解决一些比赛过程中发现的问题，主要是定位到了手眼标定，原来的手眼标定和机械给的参数差得蛮多的，而且自己的静态误差也大得离谱，估计距离8m的情况下，观察高度为0.86m的目标，观测高度为1.1～1.2m，很要命的误差，后来借鉴了小鱼的标定手法，主要参考这一篇文章，但是实际测试下来效果，怎么说呢，对比之前的超绝误差有很大进步，虽然目前还不够，但是准备买新标定板了，新标定板到了再标，感觉算法是没问题的。\n原理 应用场景 我们英雄打击前哨站的策略是定头，就是枪管始终指向机器人中心，等待装甲板转过来（因为电机劲儿太小控不住云台），所以按理来说弹丸落点就算高度打不准，也应该 …",
           cover: "http:\/\/localhost:1313\/images\/%E7%86%8F%E5%AD%90.jpg",
         };
       </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {

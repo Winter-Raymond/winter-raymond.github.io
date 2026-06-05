@@ -10,7 +10,20 @@
 /><title>
   RoboMaster 自瞄火控调试踩坑记录 | Winter Raymond
 </title>
-<meta name="description" content="少女祈祷中..."/><script>
+<meta name="description" content="少女祈祷中..."/>
+<script src="https://www.googletagmanager.com/gtag/js?id=true"></script>
+<script data-pjax>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'true');
+</script>
+<script>
   window.siteConfig = JSON.parse("{\"anchor\":{\"auto\":{\"enable\":false,\"length\":60},\"explicit\":{\"enable\":false,\"marker\":\"{#anchor-\",\"prefix\":\"anchor-\"}},\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_ex15nbittbh\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
   
 </script>
@@ -163,7 +176,7 @@
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">1</div>
+    <div>文章</div><div class="sidebar-state-number">2</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>
@@ -173,10 +186,26 @@
   </a>
   <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>标签</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">5</div>
   </a>
 </div>
-<div class="sidebar-social" ></div><div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+<div class="sidebar-social" ><div class="icon-email sidebar-social-icon">
+        <a
+          href="mailto:rsy20060624@outlook.com"
+          itemprop="url"
+          target="_blank"
+          aria-label="email"
+          rel="noopener nofollow noreferrer"
+        ></a>
+      </div><div class="icon-github sidebar-social-icon">
+        <a
+          href="https://github.com/Winter-Raymond"
+          itemprop="url"
+          target="_blank"
+          aria-label="github"
+          rel="noopener nofollow noreferrer"
+        ></a>
+      </div></div><div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
       <a
         class="sidebar-menu-link-dummy"
         href="/"
@@ -229,7 +258,7 @@
 </div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h2 id="背景">
 <a class="header-anchor" href="#%e8%83%8c%e6%99%af"></a>
 背景
-</h2><p>  RMUC2026后，尝试解决一些比赛过程中发现的问题，主要是定位到了手眼标定，原来的手眼标定和机械给的参数差得蛮多的，而且自己的静态误差也大得离谱，估计距离8m的情况下，观察高度为0.86m的目标，观测高度为1.1～1.2m，很要命的误差，后来借鉴了小鱼的标定手法，主要参考这一篇<a href="https://zhuanlan.zhihu.com/p/388965279?share_code=9boac3GKx2TA&amp;utm_psn=2039622685618082703">文章</a>，但是实际测试下来效果，怎么说呢，对比之前的超绝误差有很大进步，但在8m的距离下依旧不够用</p>
+</h2><p>  RMUC2026后，尝试解决一些比赛过程中发现的问题，主要是定位到了手眼标定，原来的手眼标定和机械给的参数差得蛮多的，而且自己的静态误差也大得离谱，估计距离8m的情况下，观察高度为0.86m的目标，观测高度为1.1～1.2m，很要命的误差，后来借鉴了小鱼的标定手法，主要参考这一篇<a href="https://zhuanlan.zhihu.com/p/388965279?share_code=9boac3GKx2TA&amp;utm_psn=2039622685618082703">文章</a>，但是实际测试下来效果，怎么说呢，对比之前的超绝误差有很大进步，但在8m的距离下依旧不够用。</p>
 <h2 id="火控不符合实际">
 <a class="header-anchor" href="#%e7%81%ab%e6%8e%a7%e4%b8%8d%e7%ac%a6%e5%90%88%e5%ae%9e%e9%99%85"></a>
 火控不符合实际
@@ -310,7 +339,23 @@
       >
     </li></ul>
 </footer>
-  </div></article></section>
+  </div><nav
+    id="article-nav"
+    aria-label="Article navigation"
+    data-aos="fade-up"
+  ><div class="article-nav-link-wrap right"><img
+            data-src="https://winter-raymond.github.io/images/xunzi6.png"
+            data-sizes="auto"
+            alt="RoboMaster 自瞄火控调试踩坑记录"
+            class="lazyload"
+          /><a
+          href="/posts/robomaster-handeyecalibration/"
+          aria-label="后一篇:RoboMaster 自瞄火控调试踩坑记录"
+          title="后一篇:RoboMaster 自瞄火控调试踩坑记录"
+        ></a>
+        <div class="article-nav-caption">后一篇</div>
+        <h3 class="article-nav-title">RoboMaster 自瞄火控调试踩坑记录</h3>
+      </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
     <div class="footer-line"></div>
@@ -331,10 +376,10 @@
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;79</span
+          >&nbsp;120</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;00:01</span>
+        <span class="icon-coffee">&nbsp;00:02</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"
@@ -385,7 +430,7 @@
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">1</div>
+    <div>文章</div><div class="sidebar-state-number">2</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>
@@ -395,10 +440,26 @@
   </a>
   <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>标签</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">5</div>
   </a>
 </div>
-<div class="sidebar-social" ></div><div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+<div class="sidebar-social" ><div class="icon-email sidebar-social-icon">
+        <a
+          href="mailto:rsy20060624@outlook.com"
+          itemprop="url"
+          target="_blank"
+          aria-label="email"
+          rel="noopener nofollow noreferrer"
+        ></a>
+      </div><div class="icon-github sidebar-social-icon">
+        <a
+          href="https://github.com/Winter-Raymond"
+          itemprop="url"
+          target="_blank"
+          aria-label="github"
+          rel="noopener nofollow noreferrer"
+        ></a>
+      </div></div><div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
       <a
         class="sidebar-menu-link-dummy"
         href="/"

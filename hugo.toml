@@ -32,6 +32,12 @@ theme = "reimu"
     name = "email"
     url = "mailto:rsy20060624@outlook.com"
 
+
+[markup.goldmark.extensions.passthrough]
+enable = true
+delimiters.block = [["\\[", "\\]"], ["$$", "$$"]]
+delimiters.inline = [["\\(", "\\)"], ["$", "$"]]
+
 [menu]
 [[menu.main]]
   identifier = "posts"
