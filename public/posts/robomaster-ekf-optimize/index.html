@@ -8,7 +8,7 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 /><title>
-  手眼标定 | Winter Raymond
+  “Robomaster Ekf Optimize” | Winter Raymond
 </title>
 <meta name="description" content="少女祈祷中..."/>
 <script src="https://www.googletagmanager.com/gtag/js?id=true"></script>
@@ -46,20 +46,20 @@
     type="font/woff2"
     crossorigin="anonymous"
   /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
-  <meta property="og:title" content="手眼标定 | Winter Raymond" />
+  <meta property="og:title" content="“Robomaster Ekf Optimize” | Winter Raymond" />
   <meta
     property="og:description"
     content="少女祈祷中..."
   />
-  <meta property="og:url" content="http://localhost:1313/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/" />
+  <meta property="og:url" content="http://localhost:1313/posts/robomaster-ekf-optimize/" />
   <meta
     property="og:site_name"
     content="Raymond&#39;s Blog"
   />
-  <meta property="og:image" content="http://localhost:1313/images/%E7%86%8F%E5%AD%90.jpg" />
+  <meta property="og:image" content="https://winter-raymond.github.io/images/xunzi1.png" />
   <meta property="article:author" content="Winter Raymond" />
-  <meta property="article:published_time" content="2026-06-05T00:15:54&#43;08:00" />
-  <meta property="article:modified_time" content="2026-06-05T00:15:54&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/%E7%86%8F%E5%AD%90.jpg" /><link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/index.xml" title="Raymond's Blog">
+  <meta property="article:published_time" content="2026-06-07T00:02:17&#43;08:00" />
+  <meta property="article:modified_time" content="2026-06-07T00:02:17&#43;08:00" /><meta property="article:tag" content="RoboMaster, 视觉, EKF, 调试" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="https://winter-raymond.github.io/images/xunzi1.png" />
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
     rel="preload"
     as="style"
@@ -133,7 +133,7 @@
       </a><a class="main-nav-link-wrap" href="/about"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">关于</span>
       </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
-  <nav id="sub-nav" aria-label="Secondary navigation"><a id="nav-rss-link" class="nav-icon" href="/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/index.xml" title="RSS 订阅" aria-label="RSS 订阅" target="_blank"></a></nav><nav id="i18n-nav" aria-label="Language selection">
+  <nav id="sub-nav" aria-label="Secondary navigation"></nav><nav id="i18n-nav" aria-label="Language selection">
       <div class="custom-dropdown">
         <div class="select-selected" id="select-selected" role="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Language menu">
           <span id="nav-language-btn" class="nav-icon" style="padding: 0 20px 0 0"></span>
@@ -183,19 +183,28 @@
         });
       </script>
     </nav></div>
-<header id="header" aria-label="Site header"><picture></picture><img crossorigin="anonymous" fetchpriority="high" src="/images/%e7%86%8f%e5%ad%90.jpg" alt="手眼标定"><div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture>
+    <img crossorigin="anonymous" fetchpriority="high" src="https://winter-raymond.github.io/images/xunzi1.png" alt="“Robomaster Ekf Optimize”"><div id="header-outer">
     <div id="header-title"><span id="logo">
-            <h1 data-aos="slide-up">标签</h1>
-          </span><h2 id="subtitle-wrap" data-aos="slide-down"><span id="subtitle">手眼标定</span></h2></div>
+            <h1 data-aos="slide-up">“Robomaster Ekf Optimize”</h1>
+          </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
   </div>
 </header><div id="content"
           aria-label="Page content"
           class="sidebar-left"
-            ><aside id="sidebar" aria-label="Sidebar"><div class="sidebar-wrapper-container "><div class="sidebar-wrapper">
+            ><aside id="sidebar" aria-label="Sidebar"><div class="sidebar-wrapper-container sticky"><div class="sidebar-wrapper">
     <div
       class="sidebar-wrap"
       data-aos="fade-up"
-    ><div class="sidebar-author">
+    ><div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+  </ul>
+</nav>
+</div></div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img
     data-src="/avatar/%e7%86%8f%e5%ad%90.jpg"
     data-sizes="auto"
@@ -207,7 +216,7 @@
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">2</div>
+    <div>文章</div><div class="sidebar-state-number">3</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>
@@ -217,7 +226,7 @@
   </a>
   <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>标签</div>
-    <div class="sidebar-state-number">5</div>
+    <div class="sidebar-state-number">6</div>
   </a>
 </div>
 <div class="sidebar-social" ><div class="icon-email sidebar-social-icon">
@@ -260,191 +269,91 @@
         href="/about"
         aria-label="关于"
       ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">关于</div>
-    </div></div></div>
-  </div><div class="sidebar-widget"><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
-    >
-      <div style="display: flex; justify-content: space-between;">
-        <h3 class="widget-title">分类</h3></div>
-      <div class="widget">
-        <ul class="category-list"><li class="category-list-item">
-                <a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/" 
-                  title="机器人"
-                  >机器人</a
-                >
-              </li></ul>
-      </div>
-    </div>
-  </div><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
-    >
-      <div style="display: flex; justify-content: space-between;">
-        <h3 class="widget-title">标签</h3></div>
-      <div class="widget">
-        <ul class="tag-list" itemprop="keywords"><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/robomaster/"
-                  aria-label="标签: RoboMaster"
-                  title="RoboMaster"
-                >
-                  RoboMaster
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/"
-                  aria-label="标签: 手眼标定"
-                  title="手眼标定"
-                >
-                  手眼标定
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/%E7%81%AB%E6%8E%A7/"
-                  aria-label="标签: 火控"
-                  title="火控"
-                >
-                  火控
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/%E8%A7%86%E8%A7%89/"
-                  aria-label="标签: 视觉"
-                  title="视觉"
-                >
-                  视觉
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/%E8%B0%83%E8%AF%95/"
-                  aria-label="标签: 调试"
-                  title="调试"
-                >
-                  调试
-                </a>
-              </li></ul>
-      </div>
-    </div>
-  </div><div class="widget-wrapper">
+    </div></div></div><div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div></div>
+  </div><div class="sidebar-widget"></div></div></aside>
+<section id="main" aria-label="Main content"><article
+  class="h-entry article"
+  itemscope
+  itemtype="https://schema.org/BlogPosting"
+>
   <div
-    class="widget-wrap"
+    class="article-inner"
     data-aos="fade-up"
   >
-    <h3 class="widget-title">标签云</h3><div class="widget tagcloud"><a
-            style="font-size:20px"
-            href="/tags/robomaster/"
-            aria-label="标签: RoboMaster"
-            >RoboMaster</a
-          ><a
-            style="font-size:10px"
-            href="/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/"
-            aria-label="标签: 手眼标定"
-            >手眼标定</a
-          ><a
-            style="font-size:10px"
-            href="/tags/%E7%81%AB%E6%8E%A7/"
-            aria-label="标签: 火控"
-            >火控</a
-          ><a
-            style="font-size:20px"
-            href="/tags/%E8%A7%86%E8%A7%89/"
-            aria-label="标签: 视觉"
-            >视觉</a
-          ><a
-            style="font-size:20px"
-            href="/tags/%E8%B0%83%E8%AF%95/"
-            aria-label="标签: 调试"
-            >调试</a
-          ></div>
-  </div>
-</div><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
+    <div class="article-meta"><div class="article-date">
+  <span
+    class="article-date-link icon-calendar"
+    data-aos="zoom-in"
+  >
+    <time datetime="2026-06-07 00:02:17 &#43;0800 CST" itemprop="datePublished"
+      >2026-06-07</time
     >
-      <h3 class="widget-title">最新文章</h3>
-      <div class="widget">
-        <ul><li>
-              <a href="/posts/robomaster-handeyecalibration/" title="RoboMaster 自瞄手眼标定调试优化记录">RoboMaster 自瞄手眼标定调试优化记录</a>
-            </li><li>
-              <a href="/posts/robomaster-tracker-debug/" title="RoboMaster 自瞄火控调试踩坑记录">RoboMaster 自瞄火控调试踩坑记录</a>
-            </li></ul>
-      </div>
-    </div>
-  </div></div></div></aside>
-<section id="main" aria-label="Main content"><div
-    class="archives-outer-wrap"
-    data-aos="fade-up"
-  ><div class="tag-wrap"><div
-      class="archives-tag-list-item"
+    <time style="display: none;" id="post-update-time"
+      >2026-06-07</time
+    >
+  </span></div>
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h2 id="背景">
+<a class="header-anchor" href="#%e8%83%8c%e6%99%af"></a>
+背景
+</h2></div>
+    <footer class="article-footer"><ul class="article-category-list"><li class="article-tag-list-item" data-aos="zoom-in">
+    <a
+      class="article-category-link"
+      href="/categories/%e6%9c%ba%e5%99%a8%e4%ba%ba"
       data-aos="zoom-in"
+      >机器人</a
     >
-      <a class="archives-tag-list-link" href="/tags/robomaster/"
+    </li></ul>
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/robomaster"
+        rel="tag"
         >RoboMaster</a
       >
-    </div><div
-      class="archives-tag-list-item"
-      data-aos="zoom-in"
-    >
-      <a class="archives-tag-list-link" href="/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/"
-        >手眼标定</a
-      >
-    </div><div
-      class="archives-tag-list-item"
-      data-aos="zoom-in"
-    >
-      <a class="archives-tag-list-link" href="/tags/%E7%81%AB%E6%8E%A7/"
-        >火控</a
-      >
-    </div><div
-      class="archives-tag-list-item"
-      data-aos="zoom-in"
-    >
-      <a class="archives-tag-list-link" href="/tags/%E8%A7%86%E8%A7%89/"
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/%e8%a7%86%e8%a7%89"
+        rel="tag"
         >视觉</a
       >
-    </div><div
-      class="archives-tag-list-item"
-      data-aos="zoom-in"
-    >
-      <a class="archives-tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/"
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/ekf"
+        rel="tag"
+        >EKF</a
+      >
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/%e8%b0%83%e8%af%95"
+        rel="tag"
         >调试</a
       >
-    </div></div>
-<div class="category-wrap"><div
-      class="archives-category-list-item"
-      data-aos="zoom-in"
-    >
-      <a class="archives-category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"
-        >机器人</a
-      >
-    </div></div><section class="archives-wrap" data-aos="fade-up">
-    <div class="archive-year-wrap">
-      <span class="archive-year">2026</span>
-    </div>
-    <ul><li class="archive-article">
-          <div class="archive-article-date">
-            <span>
-              <time
-                class="dt-published"
-                datetime="2026-06-05 00:15:54 &#43;0800 CST"
-                itemprop="datePublished"
-                >2026-06</time
-              >
-            </span>
-          </div><a class="archive-article-title" href="/posts/robomaster-handeyecalibration/"
-              >RoboMaster 自瞄手眼标定调试优化记录</a
-            ></li></ul>
-  </section></div><nav id="page-nav" aria-label="Pagination navigation" data-aos="fade-up"><span class="page-number current">1</span></nav>
-</section>
+    </li></ul>
+</footer>
+  </div><nav
+    id="article-nav"
+    aria-label="Article navigation"
+    data-aos="fade-up"
+  ><div class="article-nav-link-wrap left"><img
+            data-src="https://winter-raymond.github.io/images/xunzi6.png"
+            data-sizes="auto"
+            alt="RoboMaster 自瞄手眼标定调试优化记录"
+            class="lazyload"
+          /><a
+          href="/posts/robomaster-handeyecalibration/"
+          aria-label="前一篇:RoboMaster 自瞄手眼标定调试优化记录"
+          title="前一篇:RoboMaster 自瞄手眼标定调试优化记录"
+        ></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">RoboMaster 自瞄手眼标定调试优化记录</h3>
+      </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
     <div class="footer-line"></div>
@@ -468,7 +377,7 @@
           >&nbsp;4.9k</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;00:11</span>
+        <span class="icon-coffee">&nbsp;00:12</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"
@@ -490,7 +399,15 @@
             <div class="arrow-up"></div>
           </div><div id="mask" class="hide"></div>
       </div><nav id="mobile-nav" aria-label="Mobile navigation">
-  <div class="sidebar-wrap"><div class="sidebar-author">
+  <div class="sidebar-wrap"><div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+  </ul>
+</nav>
+</div></div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img
     data-src="/avatar/%e7%86%8f%e5%ad%90.jpg"
     data-sizes="auto"
@@ -502,7 +419,7 @@
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">2</div>
+    <div>文章</div><div class="sidebar-state-number">3</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>
@@ -512,7 +429,7 @@
   </a>
   <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>标签</div>
-    <div class="sidebar-state-number">5</div>
+    <div class="sidebar-state-number">6</div>
   </a>
 </div>
 <div class="sidebar-social" ><div class="icon-email sidebar-social-icon">
@@ -555,7 +472,10 @@
         href="/about"
         aria-label="关于"
       ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">关于</div>
-    </div></div></div></nav>
+    </div></div></div></div><div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div></nav>
 </div><script
     src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"
     
@@ -611,10 +531,10 @@
   <div><script data-pjax>
         window.REIMU_POST = {
           author: "Winter Raymond",
-          title: "手眼标定",
-          url: "http:\/\/localhost:1313\/tags\/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A\/",
-          description: "",
-          cover: "http:\/\/localhost:1313\/images\/%E7%86%8F%E5%AD%90.jpg",
+          title: "“Robomaster Ekf Optimize”",
+          url: "http:\/\/localhost:1313\/posts\/robomaster-ekf-optimize\/",
+          description: "记录了整理调试 RoboMaster 自瞄卡尔曼滤波器的经历，主要包括对卡尔曼滤波器的r学习经历，理解实现",
+          cover: "https:\/\/winter-raymond.github.io\/images\/xunzi1.png",
         };
       </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
           if (_$$(`${gallery} ${children}`).length > 0) {
