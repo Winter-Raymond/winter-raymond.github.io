@@ -4,16 +4,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <lastmod>2026-06-07T00:02:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
                 href="http://localhost:1313/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-tw"
-                href="http://localhost:1313/zh-tw/categories/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -25,9 +20,17 @@
                 hreflang="ja"
                 href="http://localhost:1313/ja/categories/"
                 />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-tw"
+                href="http://localhost:1313/zh-tw/categories/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/ekf/</loc>
+    <lastmod>2026-06-07T00:02:17+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <lastmod>2026-06-07T00:02:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -50,13 +53,13 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/robomaster/</loc>
-    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <lastmod>2026-06-07T00:02:17+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/robomaster-handeyecalibration/</loc>
-    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <loc>http://localhost:1313/posts/robomaster-ekf-optimize/</loc>
+    <lastmod>2026-06-07T00:02:17+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <lastmod>2026-06-07T00:02:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -79,12 +82,15 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/%E8%B0%83%E8%AF%95/</loc>
-    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <lastmod>2026-06-07T00:02:17+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
-    <lastmod>2026-06-05T00:15:54+08:00</lastmod>
+    <lastmod>2026-06-07T00:02:17+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/%E8%A7%86%E8%A7%89/</loc>
+    <lastmod>2026-06-07T00:02:17+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/robomaster-handeyecalibration/</loc>
     <lastmod>2026-06-05T00:15:54+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/%E6%89%8B%E7%9C%BC%E6%A0%87%E5%AE%9A/</loc>

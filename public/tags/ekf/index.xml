@@ -22,13 +22,13 @@
     
 
     <item>
-      <title>“Robomaster Ekf Optimize”</title>
+      <title>Robomaster Ekf Optimize</title>
       <link>http://localhost:1313/posts/robomaster-ekf-optimize/</link>
       <pubDate>Sun, 07 Jun 2026 00:02:17 &#43;0800</pubDate>
       <author>rsy20060624@outlook.com (Winter Raymond)</author>
       <guid>http://localhost:1313/posts/robomaster-ekf-optimize/</guid>
       <description>
-        <![CDATA[<h1>“Robomaster Ekf Optimize”</h1><p>作者：Winter Raymond（rsy20060624@outlook.com）</p>
+        <![CDATA[<h1>Robomaster Ekf Optimize</h1><p>作者：Winter Raymond（rsy20060624@outlook.com）</p>
         
           记录了整理调试 RoboMaster 自瞄卡尔曼滤波器的经历，主要包括对卡尔曼滤波器的r学习经历，理解实现
         

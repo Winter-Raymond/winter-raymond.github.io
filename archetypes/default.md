@@ -7,4 +7,5 @@ categories: []
 summary: ""
 cover: ""
 banner: ""
+math: true
 ---

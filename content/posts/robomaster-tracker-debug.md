@@ -5,6 +5,7 @@ draft: false
 tags: ["RoboMaster", "视觉", "火控", "调试"]
 categories: ["机器人"]
 summary: "记录自瞄系统中火控模块的调试过程，包括火控逻辑选择、debug流程和擦枪管的排查。"
+cover: https://winter-raymond.github.io/images/xunzi3.png
 ---
 
 ## 背景
