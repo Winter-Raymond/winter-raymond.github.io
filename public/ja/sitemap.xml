@@ -11,11 +11,6 @@
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="ja"
                 href="http://localhost:1313/ja/categories/"
                 />
@@ -23,6 +18,11 @@
                 rel="alternate"
                 hreflang="zh-tw"
                 href="http://localhost:1313/zh-tw/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/categories/"
                 />
   </url><url>
     <loc>http://localhost:1313/ja/</loc>
