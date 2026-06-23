@@ -30,7 +30,7 @@
       <description>
         <![CDATA[<h1>Robomaster Ekf Optimize</h1><p>作者：Winter Raymond（rsy20060624@outlook.com）</p>
         
-          记录了整理调试 RoboMaster 自瞄卡尔曼滤波器的经历，主要包括对卡尔曼滤波器的r学习经历，理解实现
+          记录了整理调试 RoboMaster 自瞄卡尔曼滤波器的相关知识，主要包括对卡尔曼滤波器的学习经历，理解实现
         
         <hr><p>本文2026-06-07首发于<a href='http://localhost:1313/'>Raymond's Blog</a>，最后修改于2026-06-07</p>]]>
       </description>

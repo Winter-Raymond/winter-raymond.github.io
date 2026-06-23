@@ -11,6 +11,11 @@
                 />
     <xhtml:link
                 rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
                 hreflang="ja"
                 href="http://localhost:1313/ja/categories/"
                 />
@@ -19,17 +24,17 @@
                 hreflang="zh-tw"
                 href="http://localhost:1313/zh-tw/categories/"
                 />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/categories/"
-                />
   </url><url>
     <loc>http://localhost:1313/zh-tw/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
                 href="http://localhost:1313/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -41,22 +46,12 @@
                 hreflang="zh-tw"
                 href="http://localhost:1313/zh-tw/"
                 />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/"
-                />
   </url><url>
     <loc>http://localhost:1313/zh-tw/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
                 href="http://localhost:1313/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-tw"
-                href="http://localhost:1313/zh-tw/tags/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -67,6 +62,11 @@
                 rel="alternate"
                 hreflang="ja"
                 href="http://localhost:1313/ja/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-tw"
+                href="http://localhost:1313/zh-tw/tags/"
                 />
   </url>
 </urlset>
